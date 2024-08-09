@@ -6,6 +6,9 @@ const Home: React.FC = () => {
     <div>
       <h1>The Booker</h1>
       <div>
+        <Link to="thebooker://(tab)/book"><button>アプリに飛ばすテスト</button></Link>
+      </div>
+      <div>
         <Link to="/page1"><button>Go to Page 1</button></Link>
         <Link to="/page2"><button>Go to Page 2</button></Link>
         <Link to="/page3"><button>Go to Page 3</button></Link>
