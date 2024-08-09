@@ -12,5 +12,9 @@ COPY tsconfig.json ./
 COPY ./src ./src
 RUN npx tsc
 
-# コンパイルされたJavaScriptを実行
-CMD ["node", "dist/index.js"]
+# TypeScriptのソースコードをコピー
+COPY ./tsconfig.json ./
+COPY ./src ./src
+
+# 開発サーバーを起動
+CMD ["npm", "run", "dev"]
