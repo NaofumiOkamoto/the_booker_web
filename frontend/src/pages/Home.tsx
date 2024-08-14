@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../index.css';
 import '/node_modules/flag-icons/css/flag-icons.min.css'
 
 const Home: React.FC = () => {
+  const [isSearched, setIsSearched] = useState(false)
+
+  const clickSearch = () => {
+    setIsSearched(true)
+  }
+
+  const clickConfirm = () => {
+    setIsSearched(false)
+  }
+
   return (
     <div className="container">
         <div className="auth-buttons">
@@ -37,6 +47,22 @@ const Home: React.FC = () => {
 
      <div>
       <h2>予約登録</h2>
+      <input className="input" placeholder=' eBay item number'></input>
+      <button onClick={clickSearch}>検索</button>
+      {isSearched && (
+        <>
+        <div className='searched-product'>
+          <div><p>商品名</p><p>aaa</p></div>
+          <div><p>現在価格</p><p>aaa</p></div>
+          <div><p>終了日時</p><p>aaa</p></div>
+        </div>
+        <div>
+          <p><input className="input" placeholder=' 入札金額'></input></p>
+          <p><input className="input" placeholder=' 入札時間'></input></p>
+        </div>
+        <button onClick={clickConfirm}>登録</button>
+        </>
+      )}
 
      </div>
 
