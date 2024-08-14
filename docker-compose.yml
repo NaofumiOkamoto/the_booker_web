@@ -33,4 +33,4 @@ services:
 
 volumes:
 #   db_data:
-  front_nodemodules
+  front_node_modules
