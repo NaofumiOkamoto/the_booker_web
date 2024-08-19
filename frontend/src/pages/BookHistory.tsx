@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Question: React.FC = () => {
-  window.confirm("これが確認ダイアログです。");
+const BookHistory: React.FC = () => {
   return (
     <div>
-      <h1>よくある質問</h1>
+      <h1>予約履歴</h1>
       <Link to="/"><button>Go to Home</button></Link>
     </div>
   );
 };
 
-export default Question;
+export default BookHistory;
