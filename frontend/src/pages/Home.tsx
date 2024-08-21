@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useAuth } from '../auth/AuthProvider'
 
 const Home: React.FC = () => {
-  const { promptLogin, ebayUser } = useAuth()
+  const { promptLogin, ebayUser, ebayCode } = useAuth()
   const [isSearched, setIsSearched] = useState(false)
 
   const ebay = async() => {
@@ -33,8 +33,11 @@ const Home: React.FC = () => {
       <button onClick={() => { void (async () => { await ebay() })() }}>
         ebayと連携
       </button>
-      {ebayUser && (
-        <p>{ ebayUser }</p>
+      {ebayCode && (
+        <div>
+          <p>ebayCode{ ebayCode }</p>
+          <p>ebayUser{ ebayUser }</p>
+        </div>
       )}
     </div>
      <div>

@@ -8,6 +8,7 @@ interface AuthContextType {
   promptLogin: () => void;  // ログイン関数
   logout: () => void;       // ログアウト関数
   ebayUser: string;
+  ebayCode: string; // あとで消す
 }
 interface AuthProviderProps {
   children: ReactNode;
@@ -36,13 +37,14 @@ const REDIRECT_URI_SAND_BOX = import.meta.env.VITE_REDIRECT_URI_SAND_BOX
 export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [ebayUser, setEbayUser] = useState<string>('');
+  const [ebayCode, setEbayCode] = useState<string>('');
   const navigate = useNavigate();  // useNavigateをAuthProviderの中で使用
 
   // ログイン関数
   const promptLogin = async (): Promise<void> => {
     // eBayの認証URLにリダイレクト
     console.log('ebayにリダイレクト')
-    const authUrl = `${EBAY_AUTH_URL_SAND_BOX}?client_id=${CLIENT_ID_SAND_BOX}&redirect_uri=${REDIRECT_URI_SAND_BOX}&response_type=code&scope=${SCOPE_SAND_BOX}`;
+    const authUrl = `${EBAY_AUTH_URL_SAND_BOX}?client_id=${CLIENT_ID_SAND_BOX}&redirect_uri=${REDIRECT_URI_SAND_BOX}&response_type=code&scope=${SCOPE_SAND_BOX}&prompt=login`;
     window.location.href = authUrl;
   };
 
@@ -53,6 +55,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     if (code) {
       // authenticateWithBookerServer(code);
       console.log('codeを取得!!!', code)
+      setEbayCode(code)
     }
   }, []);
 
@@ -77,7 +80,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   return (
-    <AuthContext.Provider value={{ authToken, promptLogin, logout, ebayUser }}>
+    <AuthContext.Provider value={{ authToken, promptLogin, logout, ebayUser, ebayCode }}>
       {children}
     </AuthContext.Provider>
   );
