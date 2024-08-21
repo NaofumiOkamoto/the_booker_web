@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import '../index.css';
 import '/node_modules/flag-icons/css/flag-icons.min.css'
 import axios from 'axios'
+import { useAuth } from '../auth/AuthProvider'
 
 const Home: React.FC = () => {
+  const { promptLogin, ebayUser } = useAuth()
   const [isSearched, setIsSearched] = useState(false)
+
+  const ebay = async() => {
+    await promptLogin()
+  }
 
   const clickSearch = async () => {
     const res = await axios.get('http://localhost:5001/test')
@@ -23,6 +29,14 @@ const Home: React.FC = () => {
       <p>オークション形式で出品されている商品に、入札する「金額」「時間」を予約登録して自動入札する便利な機能を提供しております。</p>
      </main>
 
+    <div>
+      <button onClick={() => { void (async () => { await ebay() })() }}>
+        ebayと連携
+      </button>
+      {ebayUser && (
+        <p>{ ebayUser }</p>
+      )}
+    </div>
      <div>
       <h2>予約登録</h2>
       <input className="input" placeholder=' eBay item number'></input>
