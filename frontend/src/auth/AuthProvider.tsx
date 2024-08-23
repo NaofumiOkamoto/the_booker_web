@@ -50,19 +50,22 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 
   // 認証後の処理
   useEffect(() => {
+    console.log('useEffect')
     void (async () => {
+      console.log('void')
       const urlParams = new URLSearchParams(window.location.search);
       const code = urlParams.get('code');
       if (code) {
         console.log('codeを取得!!!', code)
-        await authenticateWithBookerServer(code);
         setEbayCode(code)
+        await authenticateWithBookerServer(code);
       }
     })
   }, []);
 
   const authenticateWithBookerServer = async (code: string): Promise<void> => {
     try {
+      console.log('start authenticateWithBookerServer')
       const response = await axios.post('/api/authenticate', { code });
       const user = response.data.ebay_user;
       setEbayUser(user.username);
