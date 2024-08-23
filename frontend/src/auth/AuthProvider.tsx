@@ -97,7 +97,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const checkLinkToEbayWithBookerServer = async (): Promise<void> => {
     try {
       console.log('start checkLinkToEbayWithBookerServer')
-      const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
+      const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
+      // const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
       const result = response.data.result;
       console.log(response.data)
       console.log(result)
