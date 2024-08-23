@@ -66,7 +66,13 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const authenticateWithBookerServer = async (code: string): Promise<void> => {
     try {
       console.log('start authenticateWithBookerServer')
-      const response = await axios.post('/api/authenticate', { code });
+      const partiallyDecodedStr = decodeURIComponent(code)
+      const fullyDecodedStr = decodeURIComponent(partiallyDecodedStr)
+      console.log('fullyDecodedStr', fullyDecodedStr)
+      const response = await axios.post('/api/authenticate',
+        { fullyDecodedStr },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
       const user = response.data.ebay_user;
       setEbayUser(user.username);
       navigate('/');  // ログイン後にルートページに遷移
