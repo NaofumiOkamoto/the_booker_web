@@ -1,30 +1,12 @@
 // src/components/Header.tsx
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../config';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider'
 
 const Header: React.FC = () => {
-  const [email, setEmail] = useState<string | null>(null);
+  const { email, handleLogout } = useAuth()
   const [isOpenHistory, setIsOpenHistory] = useState(false)
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setEmail(user.email);
-      } else {
-        setEmail(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    await signOut(auth);
-    navigate('/login');
-  };
 
   const openHistory = () => {
     setIsOpenHistory(!isOpenHistory)
