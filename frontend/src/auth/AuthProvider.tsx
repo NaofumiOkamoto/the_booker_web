@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         setEbayCode(code)
         await authenticateWithBookerServer(code);
       }
-    })
+    })()
   }, []);
 
   const authenticateWithBookerServer = async (code: string): Promise<void> => {
