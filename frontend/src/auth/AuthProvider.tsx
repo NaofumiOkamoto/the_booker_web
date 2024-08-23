@@ -50,27 +50,27 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 
   // 認証後の処理
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    if (code) {
-      // authenticateWithBookerServer(code);
-      console.log('codeを取得!!!', code)
-      setEbayCode(code)
-    }
+    void (async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      if (code) {
+        console.log('codeを取得!!!', code)
+        await authenticateWithBookerServer(code);
+        setEbayCode(code)
+      }
+    })
   }, []);
 
-  // const authenticateWithBookerServer = async (code: string): Promise<void> => {
-  //   try {
-  //     const response = await axios.post('/api/authenticate', { code });
-  //     const bookerToken = response.data.token;
-  //     const user = response.data.ebay_user;
-  //     setAuthToken(bookerToken);
-  //     setEbayUser(user.username);
-  //     navigate('/');  // ログイン後にルートページに遷移
-  //   } catch (error) {
-  //     console.error('Authentication failed', error);
-  //   }
-  // };
+  const authenticateWithBookerServer = async (code: string): Promise<void> => {
+    try {
+      const response = await axios.post('/api/authenticate', { code });
+      const user = response.data.ebay_user;
+      setEbayUser(user.username);
+      navigate('/');  // ログイン後にルートページに遷移
+    } catch (error) {
+      console.error('booker api Authentication failed', error);
+    }
+  };
 
   // ログアウト関数
   const logout = (): void => {
