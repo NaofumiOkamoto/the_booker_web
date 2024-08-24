@@ -88,9 +88,10 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       );
       const user = response.data.ebay_user;
       setEbayUser(user.username);
-      navigate('/');
     } catch (error) {
       console.error('booker api Authentication failed', error);
+    } finally {
+      navigate('/', { state: { code: ''} });
     }
   };
 
