@@ -48,11 +48,11 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   useEffect(() => {
-    // bookerのログイン確認
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    // bookerのログイン確認（firebase）
+    onAuthStateChanged(auth, (user) => {
       if (user) {
-        setEmail(user.email ?? '')
-        setUid(user.uid)
+        setEmail(user?.email ?? '')
+        setUid(user?.uid ?? '')
       };
     });
 
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       }
     }
 
-    unsubscribe();
+    // unsubscribe();
     handleEbayAuth();
   }, []);
 
@@ -82,6 +82,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       const partiallyDecodedStr = decodeURIComponent(code)
       const fullyDecodedStr = decodeURIComponent(partiallyDecodedStr)
       console.log('fullyDecodedStr', fullyDecodedStr)
+      console.log('uid', uid)
       const response = await axios.post('/api/authenticate',
         { fullyDecodedStr, uid },
         { headers: { 'Content-Type': 'application/json' } }
@@ -101,7 +102,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
       // const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
       const result = response.data.result;
-      console.log(response.data)
+      // console.log(response.data)
       console.log(result)
     } catch (error) {
       console.error('booker api check link', error);
