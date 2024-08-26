@@ -5,9 +5,8 @@ import axios from 'axios'
 import { useAuth } from '../auth/AuthProvider'
 
 const Home: React.FC = () => {
-  const { promptLogin, ebayUserId, email } = useAuth()
+  const { promptLogin, ebayUserId, email, loading } = useAuth()
   const [isSearched, setIsSearched] = useState(false)
-  console.log('----ebayUserId----', ebayUserId)
 
   const ebay = async() => {
     await promptLogin()
@@ -36,11 +35,12 @@ const Home: React.FC = () => {
           <p>ebayと接続済み</p>
           <p>ebayUser: { ebayUserId }</p>
         </div>
-      ) : 
-        <button onClick={() => { void (async () => { await ebay() })() }}>
-          ebayと連携
-        </button>
-      )}
+      ) : (
+        loading ? ( <div>ただいま連携中</div>) : (
+          <button onClick={() => { void (async () => { await ebay() })() }}>
+            {loading ? 'ただいま連携中' : 'ebayと連携'}
+          </button>
+      )))}
     </div>
      <div>
       <h2>予約登録</h2>
