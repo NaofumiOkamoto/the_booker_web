@@ -49,15 +49,15 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 
   useEffect(() => {
     // bookerのログイン確認（firebase）
+    console.log('useEffect!!!!')
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log('--user.uid---', user.uid)
         setEmail(user?.email ?? '')
         setUid(user?.uid ?? '')
       };
 
       const handleEbayAuth = async () => {
-        console.log('uid', uid)
+        console.log('--uid---', uid)
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         const expiresIn = urlParams.get('expires_in');
@@ -75,11 +75,11 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 
       handleEbayAuth();
     });
-  }, []);
+  }, [uid]); // uid は必要
 
   const authenticateWithBookerServer = async (code: string): Promise<void> => {
     try {
-      console.log('start authenticateWithBookerServer')
+      console.log('-----start authenticateWithBookerServer------')
       const partiallyDecodedStr = decodeURIComponent(code)
       const fullyDecodedStr = decodeURIComponent(partiallyDecodedStr)
       console.log('fullyDecodedStr', fullyDecodedStr)
@@ -94,12 +94,13 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       console.error('booker api Authentication failed', error);
     } finally {
       navigate('/', { state: { code: ''} });
+      console.log('-----end authenticateWithBookerServer------')
     }
   };
 
   const checkLinkToEbayWithBookerServer = async (): Promise<void> => {
     try {
-      console.log('start checkLinkToEbayWithBookerServer')
+      console.log('---start checkLinkToEbayWithBookerServer----')
       // const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
       const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
       const result = response.data.ebay_token;
@@ -107,6 +108,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       if (result) setEbayUserId(result.user_id)
     } catch (error) {
       console.error('booker api check link', error);
+    } finally {
+      console.log('-----end checkLinkToEbayWithBookerServer----')
     }
   };
 
