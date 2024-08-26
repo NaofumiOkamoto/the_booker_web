@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         const code = urlParams.get('code');
         const expiresIn = urlParams.get('expires_in');
 
-        if (code && expiresIn) { // ebay 認証後の画面時
+        if (code && expiresIn && uid) { // ebay 認証後の画面時
           console.log('ebay認証codeを取得', code)
           setEbayCode(code)
           await authenticateWithBookerServer(code);
