@@ -34,8 +34,6 @@ const REDIRECT_URI_SAND_BOX = import.meta.env.VITE_REDIRECT_URI_SAND_BOX // リ�
 export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [ebayUserId, setEbayUserId] = useState<string>('');
   const [ebayCode, setEbayCode] = useState<string>('');
-  const [paramsCode, setparamsCode] = useState<string>('');
-  const [expiresIn, setExpiresIn] = useState<string>('');
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');
@@ -50,7 +48,6 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   useEffect(() => {
-
     // bookerのログイン確認（firebase）
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -61,27 +58,24 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 
       const handleEbayAuth = async () => {
         console.log('uid', uid)
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const expiresIn = urlParams.get('expires_in');
 
-        if (paramsCode && expiresIn) { // ebay 認証後の画面時
-          console.log('ebay認証codeを取得', paramsCode)
-          setEbayCode(paramsCode)
-          await authenticateWithBookerServer(paramsCode);
+        if (code && expiresIn) { // ebay 認証後の画面時
+          console.log('ebay認証codeを取得', code)
+          setEbayCode(code)
+          await authenticateWithBookerServer(code);
         } else if (uid && email) { // booker ログイン時
           // ebayと連携済みかをチェックする
           await checkLinkToEbayWithBookerServer();
           // 連携できてなかったら促す
         }
       }
-      const urlParams = new URLSearchParams(window.location.search);
-      setparamsCode(urlParams.get('code') ?? '')
-      setExpiresIn(urlParams.get('expiresIn') ?? '')
-      if (paramsCode && expiresIn) {
-        navigate('/', { state: { code: ''} });
-        handleEbayAuth();
-      }
 
+      handleEbayAuth();
     });
-  }, [uid, email]);
+  }, []);
 
   const authenticateWithBookerServer = async (code: string): Promise<void> => {
     try {
@@ -106,8 +100,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const checkLinkToEbayWithBookerServer = async (): Promise<void> => {
     try {
       console.log('start checkLinkToEbayWithBookerServer')
-      const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
-      // const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
+      // const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
+      const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
       const result = response.data.ebay_token;
       console.log('result: ', result)
       if (result) setEbayUserId(result.user_id)
