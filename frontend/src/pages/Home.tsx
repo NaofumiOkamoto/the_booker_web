@@ -33,7 +33,7 @@ const Home: React.FC = () => {
     <div>
       {email && (ebayUserId ? (
         <div>
-          <p>ebayCode ebayと接続済み</p>
+          <p>ebayと接続済み</p>
           <p>ebayUser: { ebayUserId }</p>
         </div>
       ) : 
