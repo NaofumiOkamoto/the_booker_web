@@ -50,10 +50,6 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setparamsCode(urlParams.get('code') ?? '')
-    setExpiresIn(urlParams.get('expiresIn') ?? '')
-    if (paramsCode && expiresIn) navigate('/', { state: { code: ''} });
 
     // bookerのログイン確認（firebase）
     onAuthStateChanged(auth, (user) => {
@@ -76,8 +72,14 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
           // 連携できてなかったら促す
         }
       }
+      const urlParams = new URLSearchParams(window.location.search);
+      setparamsCode(urlParams.get('code') ?? '')
+      setExpiresIn(urlParams.get('expiresIn') ?? '')
+      if (paramsCode && expiresIn) {
+        navigate('/', { state: { code: ''} });
+        handleEbayAuth();
+      }
 
-      if (paramsCode && expiresIn) handleEbayAuth();
     });
   }, [uid, email]);
 
