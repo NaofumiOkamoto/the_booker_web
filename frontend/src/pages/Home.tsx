@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useAuth } from '../auth/AuthProvider'
 
 const Home: React.FC = () => {
-  const { promptLogin, ebayUserId, email, loading } = useAuth()
+  const { promptLogin, ebayUserId, ebayUserName, email, loading } = useAuth()
   const [isSearched, setIsSearched] = useState(false)
 
   const ebay = async() => {
@@ -33,7 +33,8 @@ const Home: React.FC = () => {
       {email && (ebayUserId ? (
         <div>
           <p>ebayと接続済み</p>
-          <p>ebayUser: { ebayUserId }</p>
+          <p>ebayUserId: { ebayUserId }</p>
+          <p>ebayUserName: { ebayUserName }</p>
         </div>
       ) : (
         loading ? ( <div>ただいま連携中</div>) : (

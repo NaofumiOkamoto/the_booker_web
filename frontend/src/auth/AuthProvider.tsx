@@ -9,6 +9,7 @@ interface AuthContextType {
   promptLogin: () => void;  // ログイン関数
   handleLogout: () => void;
   ebayUserId: string;
+  ebayUserName: string;
   ebayCode: string; // あとで消す
   email: string;
   loading: boolean;
@@ -34,6 +35,7 @@ const REDIRECT_URI_SAND_BOX = import.meta.env.VITE_REDIRECT_URI_SAND_BOX // リ�
 
 export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [ebayUserId, setEbayUserId] = useState<string>('');
+  const [ebayUserName, setEbayUserName] = useState<string>('');
   const [ebayCode, setEbayCode] = useState<string>('');
   const navigate = useNavigate();
 
@@ -91,7 +93,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         { headers: { 'Content-Type': 'application/json' } }
       );
       const user = response.data.ebay_user;
-      setEbayUserId(user.username);
+      setEbayUserId(user.user_id);
+      setEbayUserName(user.username);
       setLoading(false)
     } catch (error) {
       console.error('booker api Authentication failed', error);
@@ -104,11 +107,14 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const checkLinkToEbayWithBookerServer = async (): Promise<void> => {
     try {
       console.log('---start checkLinkToEbayWithBookerServer----')
-      const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
-      // const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
+      // const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
+      const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
       const result = response.data.ebay_token;
       console.log('result: ', result)
-      if (result) setEbayUserId(result.user_id)
+      if (result) {
+        setEbayUserId(result.user_id)
+        setEbayUserName(result.username)
+      }
     } catch (error) {
       console.error('booker api check link', error);
     } finally {
@@ -128,6 +134,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         promptLogin,
         handleLogout,
         ebayUserId,
+        ebayUserName,
         ebayCode,
         email,
         loading
