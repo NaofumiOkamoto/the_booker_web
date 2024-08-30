@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // コンテキストの型定義
 interface AuthContextType {
-  promptLogin: () => void;  // ログイン関数
+  promptLogin: () => void;
   handleLogout: () => void;
   ebayUserId: string;
   ebayUserName: string;
@@ -43,7 +43,9 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [uid, setUid] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false)
 
-  // ログイン関数
+  /**
+   * ebay の認証画面へ遷移
+   */
   const promptLogin = async (): Promise<void> => {
     // eBayの認証URLにリダイレクト
     console.log('ebayにリダイレクト')
@@ -80,6 +82,10 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     });
   }, [uid]); // uid は必要
 
+  /**
+   * ebay のログイン画面で認証後、レダイレクトされて処理する箇所
+   * @param code 認証コード
+   */
   const authenticateWithBookerServer = async (code: string): Promise<void> => {
     try {
       console.log('-----start authenticateWithBookerServer------')
@@ -93,7 +99,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         { headers: { 'Content-Type': 'application/json' } }
       );
       const user = response.data.ebay_user;
-      setEbayUserId(user.user_id);
+      setEbayUserId(user.userId);
       setEbayUserName(user.username);
       setLoading(false)
     } catch (error) {
@@ -104,19 +110,23 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     }
   };
 
+  /**
+   * Booker にログイン時にebayと連携しているか確認する処理
+   * Booker の ebay_token テーブルに ログインしているユーザーのレコードが存在するか
+   */
   const checkLinkToEbayWithBookerServer = async (): Promise<void> => {
     try {
       console.log('---start checkLinkToEbayWithBookerServer----')
-      // const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
-      const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
+      const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
+      // const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
       const result = response.data.ebay_token;
       console.log('result: ', result)
       if (result) {
         setEbayUserId(result.user_id)
-        setEbayUserName(result.username)
+        setEbayUserName(result.user_name)
       }
     } catch (error) {
-      console.error('booker api check link', error);
+      console.error('booker api check link error', error);
     } finally {
       console.log('-----end checkLinkToEbayWithBookerServer----')
     }
