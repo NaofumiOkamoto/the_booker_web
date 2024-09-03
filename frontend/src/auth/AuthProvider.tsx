@@ -8,6 +8,7 @@ import axios from 'axios';
 interface AuthContextType {
   promptLogin: () => void;
   handleLogout: () => void;
+  uid: string;
   ebayUserId: string;
   ebayUserName: string;
   ebayCode: string; // あとで消す
@@ -28,6 +29,7 @@ export const useAuth = (): AuthContextType => {
   return context;
 };
 
+const env = import.meta.env.VITE_ENV;
 const CLIENT_ID_SAND_BOX = import.meta.env.VITE_CLIENT_ID_SAND_BOX; // eBayのクライアントIDとシークレット
 const EBAY_AUTH_URL_SAND_BOX = import.meta.env.VITE_EBAY_AUTH_URL_SAND_BOX; // eBayの認証URL
 const SCOPE_SAND_BOX = import.meta.env.VITE_SCOPE_SAND_BOX; // スコープ
@@ -117,8 +119,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const checkLinkToEbayWithBookerServer = async (): Promise<void> => {
     try {
       console.log('---start checkLinkToEbayWithBookerServer----')
-      const response = await axios.get(`/api/check-link-ebay?uid=${uid}`);
-      // const response = await axios.get(`http://localhost:5001/api/check-link-ebay?uid=${uid}`);
+      console.log('uid', uid)
+      const response = await axios.get(`${env === 'development' ? 'http://localhost:5001' : ''}/api/check-link-ebay?uid=${uid}`);
       const result = response.data.ebay_token;
       console.log('result: ', result)
       if (result) {
@@ -143,6 +145,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       {
         promptLogin,
         handleLogout,
+        uid,
         ebayUserId,
         ebayUserName,
         ebayCode,

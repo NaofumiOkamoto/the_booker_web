@@ -5,16 +5,18 @@ import axios from 'axios'
 import { useAuth } from '../auth/AuthProvider'
 
 const Home: React.FC = () => {
-  const { promptLogin, ebayUserId, ebayUserName, email, loading } = useAuth()
+  const env = import.meta.env.VITE_ENV;
+  const { promptLogin, uid, ebayUserId, ebayUserName, email, loading } = useAuth()
   const [isSearched, setIsSearched] = useState(false)
+  const [itemNumber, setItemNumber] = useState('')
 
   const ebay = async() => {
     await promptLogin()
   }
 
   const clickSearch = async () => {
-    const res = await axios.get('http://localhost:5001/test')
-    console.log(res.data)
+    const res = await axios.get(`${env === 'development' ? 'http://localhost:5001' : ''}/api/search-item?uid=${uid}&item_number=${itemNumber}`)
+    console.log('res.item', res.data.item)
     setIsSearched(true)
   }
 
@@ -45,8 +47,8 @@ const Home: React.FC = () => {
     </div>
      <div>
       <h2>予約登録</h2>
-      <input className="input" placeholder=' eBay item number'></input>
-      <button onClick={clickSearch}>検索</button>
+      <input className="input" placeholder=' eBay item number' value={itemNumber} onChange={(t) => setItemNumber(t.target.value)}></input>
+      <button onClick={clickSearch} disabled={!itemNumber}>検索</button>
       {isSearched && (
         <>
         <div className='searched-product'>
