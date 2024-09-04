@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider'
+import CustomConfirm from '../components/EbayLinkModal'
 
 const Header: React.FC = () => {
-  const { email, handleLogout } = useAuth()
+  const { email, ebayLinkModal, handleLogout } = useAuth()
   const [isOpenHistory, setIsOpenHistory] = useState(false)
-
 
   const openHistory = () => {
     setIsOpenHistory(!isOpenHistory)
@@ -14,6 +14,7 @@ const Header: React.FC = () => {
 
   return (
     <header>
+      {ebayLinkModal && email && (<CustomConfirm />)}
       <div className='header'>
         <div className='flex'></div>
         <div className="title-section flex">

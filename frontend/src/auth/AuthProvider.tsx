@@ -14,6 +14,8 @@ interface AuthContextType {
   ebayCode: string; // あとで消す
   email: string;
   loading: boolean;
+  ebayLinkModal: boolean;
+  setEbayLinkModal: (b: boolean) => void;
 }
 interface AuthProviderProps {
   children: ReactNode;
@@ -39,6 +41,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [ebayUserId, setEbayUserId] = useState<string>('');
   const [ebayUserName, setEbayUserName] = useState<string>('');
   const [ebayCode, setEbayCode] = useState<string>('');
+  const [ebayLinkModal, setEbayLinkModal] = useState(false);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');
@@ -126,6 +129,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       if (result) {
         setEbayUserId(result.user_id)
         setEbayUserName(result.user_name)
+      } else {
+        setEbayLinkModal(true)
       }
     } catch (error) {
       console.error('booker api check link error', error);
@@ -150,7 +155,9 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         ebayUserName,
         ebayCode,
         email,
-        loading
+        loading,
+        ebayLinkModal,
+        setEbayLinkModal,
       }
     }>
       {children}
