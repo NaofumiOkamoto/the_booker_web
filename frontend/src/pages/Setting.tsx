@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { useAuth } from '../auth/AuthProvider'
 import ToggleSwitch from '../components/ToggleSwitch';
+import DeleteAccountModal from '../components/DeleteAccountModal'
 
 const Setting: React.FC = () => {
-  const { email, ebayUserName, handleLogout, promptLogin } = useAuth()
+  const { email, ebayUserId, handleLogout, promptLogin } = useAuth()
   const [success, setSuccess] = useState(false)
+  const [modal, setModal] = useState(false)
+  const showModal = () => {
+    setModal(true)
+  }
   console.log(success)
   return (
     <div className="account-settings-container">
+      {modal && (
+        <DeleteAccountModal
+          setModal={setModal}
+        />
+      )}
       <h2 className="title">アカウント設定</h2>
 
       <div className="account-info">
@@ -19,14 +29,14 @@ const Setting: React.FC = () => {
 
         <div className="info-item">
           <span>eBayアカウント</span>
-          <span>{ebayUserName || '連携されていません'}</span>
-          <button onClick={promptLogin} className="change-button">変更</button>
+          <span>{ebayUserId || '連携されていません'}</span>
+          <button onClick={promptLogin} className="change-button">{ebayUserId ? '変更' : '連携する'}</button>
         </div>
       </div>
 
       <div className="button-container">
         <button className="logout-button" onClick={handleLogout}>ログアウト</button>
-        <button className="delete-button">アカウント削除（どうする？）</button>
+        <button onClick={showModal} className="delete-button">アカウント削除</button>
       </div>
 
       <h3 className="notification-title">通知設定</h3>
