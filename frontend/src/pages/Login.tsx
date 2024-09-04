@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config'; // Adjust the import according to your project structure
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -56,9 +56,6 @@ const Login: React.FC = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <div>
-        <Link to="/"><button>Go to Home</button></Link>
-      </div>
     </div>
   );
 };
