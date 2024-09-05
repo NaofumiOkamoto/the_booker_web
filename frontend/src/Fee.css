@@ -1,0 +1,50 @@
+.fee-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.trial-text {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.fee-plans {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.plan {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 40%;
+  box-sizing: border-box;
+}
+
+.plan h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.plan ul {
+  text-align: left;
+  list-style-type: disc;
+  padding-left: 20px;
+  font-size: 14px;
+}
+
+.subscribe-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.payment-method {
+  font-weight: bold;
+  margin-top: 30px;
+}
