@@ -16,8 +16,9 @@ const Home: React.FC = () => {
   const [isSearched, setIsSearched] = useState(false)
   const [itemNumber, setItemNumber] = useState('')
   const [product, setProduct] = useState<Product | undefined>(undefined)
-  const [bitAmount, setBitAmount] = useState('')
-  const [bitAmountDecimal, setBitAmountDecimal] = useState('')
+  const [bidAmount, setBidAmount] = useState('')
+  const [bidAmountDecimal, setBidAmountDecimal] = useState('')
+  const [seconds, setSeconds] = useState(5)
 
   const ebay = async() => {
     await promptLogin()
@@ -32,9 +33,19 @@ const Home: React.FC = () => {
 
   const clickConfirm = async() => {
     await axios.post(`${env === 'development' ? 'http://localhost:5001' : ''}/book`,
-        { 'book': product },
+      { 'book': {
+          ...product,
+          ...{user_id: uid},
+          ...{item_number: itemNumber},
+          ...{bid_amount: Number(bidAmount + '.' +bidAmountDecimal)},
+          ...{seconds: seconds},
+        }
+      },
     )
     setIsSearched(false)
+    setSeconds(5)
+    setBidAmountDecimal('')
+    setBidAmount('')
   }
 
   return (
@@ -75,21 +86,21 @@ const Home: React.FC = () => {
               <p>
                 $<input
                   className="input"
-                  value={bitAmount}
-                  onChange={(e) => setBitAmount(e.target.value)}
+                  value={bidAmount}
+                  onChange={(e) => setBidAmount(e.target.value)}
                   placeholder='0'
                 />.
                 <input
                   className="input decimal"
-                  value={bitAmountDecimal}
-                  onChange={(e) => setBitAmountDecimal(e.target.value)}
+                  value={bidAmountDecimal}
+                  onChange={(e) => setBidAmountDecimal(e.target.value)}
                   placeholder='00'
                 />
               </p>
             </div>
             <div>
               <p>入札時間</p>
-              <p>終了<input className="input" value={bitAmount} onChange={(e) => setBitAmount(e.target.value)}></input>秒前</p>
+              <p>終了<input className="input" value={seconds} onChange={(e) => setSeconds(Number(e.target.value))}></input>秒前</p>
             </div>
           </div>
           <button onClick={clickConfirm}>登録</button>
