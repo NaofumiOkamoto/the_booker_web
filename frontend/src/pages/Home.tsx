@@ -32,7 +32,7 @@ const Home: React.FC = () => {
   }
 
   const clickConfirm = async() => {
-    await axios.post(`${env === 'development' ? 'http://localhost:5001' : ''}/book`,
+    await axios.post(`${env === 'development' ? 'http://localhost:5001' : ''}/api/book`,
       { 'book': {
           ...product,
           ...{user_id: uid},
