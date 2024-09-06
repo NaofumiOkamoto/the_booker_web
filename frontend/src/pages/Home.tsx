@@ -3,12 +3,21 @@ import '../index.css';
 import '/node_modules/flag-icons/css/flag-icons.min.css'
 import axios from 'axios'
 import { useAuth } from '../auth/AuthProvider'
+import dayjs from 'dayjs'
 
+interface Product {
+  product_name: string;
+  close_time: Date;
+  current_price: number;
+}
 const Home: React.FC = () => {
   const env = import.meta.env.VITE_ENV;
-  const { promptLogin, uid, ebayUserId, ebayUserName, email, loading } = useAuth()
+  const { promptLogin, uid, ebayUserId, email, loading } = useAuth()
   const [isSearched, setIsSearched] = useState(false)
   const [itemNumber, setItemNumber] = useState('')
+  const [product, setProduct] = useState<Product | undefined>(undefined)
+  const [bitAmount, setBitAmount] = useState('')
+  const [bitAmountDecimal, setBitAmountDecimal] = useState('')
 
   const ebay = async() => {
     await promptLogin()
@@ -17,10 +26,14 @@ const Home: React.FC = () => {
   const clickSearch = async () => {
     const res = await axios.get(`${env === 'development' ? 'http://localhost:5001' : ''}/api/search-item?uid=${uid}&item_number=${itemNumber}`)
     console.log('res.item', res.data.item)
+    setProduct(res.data.item)
     setIsSearched(true)
   }
 
-  const clickConfirm = () => {
+  const clickConfirm = async() => {
+    await axios.post(`${env === 'development' ? 'http://localhost:5001' : ''}/book`,
+        { 'book': product },
+    )
     setIsSearched(false)
   }
 
@@ -32,14 +45,8 @@ const Home: React.FC = () => {
      </main>
 
     <div>
-      {email && (ebayUserId ? (
-        <div>
-          <p>ebayと接続済み</p>
-          <p>ebayUserId: { ebayUserId }</p>
-          <p>ebayUserName: { ebayUserName }</p>
-        </div>
-      ) : (
-        loading ? ( <div>ただいま連携中</div>) : (
+      {email && (ebayUserId ? <></> : (
+        loading ? ( <div>ただいまebayと連携中</div>) : (
           <button onClick={() => { void (async () => { await ebay() })() }}>
             {loading ? 'ただいま連携中' : 'ebayと連携'}
           </button>
@@ -51,16 +58,41 @@ const Home: React.FC = () => {
       <button onClick={clickSearch} disabled={!itemNumber}>検索</button>
       {isSearched && (
         <>
-        <div className='searched-product'>
-          <div><p>商品名</p><p>aaa</p></div>
-          <div><p>現在価格</p><p>aaa</p></div>
-          <div><p>終了日時</p><p>aaa</p></div>
-        </div>
-        <div>
-          <p><input className="input" placeholder=' 入札金額'></input></p>
-          <p><input className="input" placeholder=' 入札時間'></input></p>
-        </div>
-        <button onClick={clickConfirm}>登録</button>
+          <div className='searched-product'>
+            <div>
+              <p>商品名</p>
+              <p>{product?.product_name}</p>
+            </div>
+            <div>
+              <p>現在価格</p>
+              <p>${product?.current_price}</p>
+            </div>
+            <div>
+              <p>終了日時</p>
+              <p>{dayjs(product?.close_time).format('YYYY/MM/DD hh:mm:ss')}</p></div>
+            <div>
+              <p>入札金額</p>
+              <p>
+                $<input
+                  className="input"
+                  value={bitAmount}
+                  onChange={(e) => setBitAmount(e.target.value)}
+                  placeholder='0'
+                />.
+                <input
+                  className="input decimal"
+                  value={bitAmountDecimal}
+                  onChange={(e) => setBitAmountDecimal(e.target.value)}
+                  placeholder='00'
+                />
+              </p>
+            </div>
+            <div>
+              <p>入札時間</p>
+              <p>終了<input className="input" value={bitAmount} onChange={(e) => setBitAmount(e.target.value)}></input>秒前</p>
+            </div>
+          </div>
+          <button onClick={clickConfirm}>登録</button>
         </>
       )}
 

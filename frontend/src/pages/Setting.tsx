@@ -24,13 +24,16 @@ const Setting: React.FC = () => {
         <div className="info-item">
           <span>The Bookerメールアドレス</span>
           <span>{email}</span>
-          <button className="change-button">変更</button>
+          {/* <button className="change-button">変更</button> */}
         </div>
 
         <div className="info-item">
           <span>eBayアカウント</span>
           <span>{ebayUserId || '連携されていません'}</span>
-          <button onClick={promptLogin} className="change-button">{ebayUserId ? '変更' : '連携する'}</button>
+          { ebayUserId
+            ? <span>連携済み</span>
+            : <button onClick={promptLogin} className="change-button">連携済み</button>
+          }
         </div>
       </div>
 

@@ -1,11 +1,11 @@
 // src/components/Header.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider'
 import CustomConfirm from '../components/EbayLinkModal'
 
 const Header: React.FC = () => {
-  const { email, ebayLinkModal } = useAuth()
+  const { email, ebayUserId, ebayLinkModal } = useAuth()
   const [isOpenHistory, setIsOpenHistory] = useState(false)
 
   const openHistory = () => {
@@ -28,6 +28,8 @@ const Header: React.FC = () => {
           {email ? (
             <div className="auth-buttons">
               <span>{email}</span>でログイン中
+              {ebayUserId && <p>ebayと接続済み { ebayUserId }</p>}
+              
             </div>
           ) : (
             <div className="auth-buttons">
