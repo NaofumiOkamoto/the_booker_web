@@ -1,8 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 import '../BookHistory.css';
+import { useAuth } from '../auth/AuthProvider'
+import dayjs from 'dayjs'
 
+interface Book {
+  id: number;
+  user_id: string;
+  item_number: string;
+  product_name: string;
+  seconds: number;
+  bid_amount: Float32Array;
+  close_time: Date;
+  current_price: Float32Array;
+  created_at: Date;
+}
 const BookHistory: React.FC = () => {
   const [filter, setFilter] = useState('reservation')
+  const [books, setBooks] = useState<Book[]>([])
+  const { uid } = useAuth()
+  const env = import.meta.env.VITE_ENV;
+
+  useEffect(() => {
+    const getBooks = async () => {
+      const res = await axios.get(`${
+          env === 'development' ? 'http://localhost:5001' : ''
+        }/api/book?uid=${uid}`)
+        setBooks(res.data.books)
+    }
+    if (uid) getBooks()
+  }, [uid])
+
   return (
     <div className="reservation-history">
       <h2>予約履歴</h2>
@@ -26,43 +54,41 @@ const BookHistory: React.FC = () => {
       {(filter === 'reservation'  || filter === 'all') &&
         <>
           <h3>予約中</h3>
-          {['a', 'b'].map(() => {
-            return (
-              <table>
-                <thead>
-                  <tr>
-                    <th>画像</th>
-                    <th>予約登録日時</th>
-                    <th>eBay item number</th>
-                    <th>商品名</th>
-                    <th>現在の価格</th>
-                    <th>送料</th>
-                    <th>残り時間</th>
-                    <th>入札価格</th>
-                    <th>入札時間</th>
-                    <th>操作</th>
-                  </tr>
-                </thead>
-                <tbody>
+            <table>
+              <thead>
+                <tr>
+                  <th>画像</th>
+                  <th>商品名</th>
+                  <th>予約登録日時</th>
+                  <th>eBay item number</th>
+                  <th>現在価格 <br />（送料）</th>
+                  <th>終了日時 残り時間</th>
+                  <th>入札価格</th>
+                  <th>入札時間</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+            {books.map((book) => {
+              return (
+                <tbody key={book.id}>
                   <tr>
                     <td>画像</td>
-                    <td>2024/09/06</td>
-                    <td>123456789</td>
-                    <td>商品名</td>
-                    <td>5000円</td>
-                    <td>1000円</td>
-                    <td>5日</td>
-                    <td>5100円</td>
-                    <td>10:00 AM</td>
+                    <td>{book.product_name}</td>
+                    <td>{dayjs(book.created_at).format('YYYY/MM/DD hh:mm:ss')}</td>
+                    <td>{book.item_number}</td>
+                    <td>${book.current_price}<br /> {`(${'xxx円'})`}</td>
+                    <td>x日</td>
+                    <td>${book.bid_amount}</td>
+                    <td>終了{book.seconds}秒前</td>
                     <td>
                       <button>編集</button>
                       <button>削除</button>
                     </td>
                   </tr>
                 </tbody>
-              </table>
-            )
-          })}
+              )
+            })}
+            </table>
         </>
       }
       {(filter === 'finish' || filter === 'all') &&
