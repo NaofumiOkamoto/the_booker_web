@@ -31,11 +31,11 @@ export const useAuth = (): AuthContextType => {
   return context;
 };
 
-const env = import.meta.env.VITE_ENV;
-const CLIENT_ID_SAND_BOX = import.meta.env.VITE_CLIENT_ID_SAND_BOX; // eBayのクライアントIDとシークレット
-const EBAY_AUTH_URL_SAND_BOX = import.meta.env.VITE_EBAY_AUTH_URL_SAND_BOX; // eBayの認証URL
-const SCOPE_SAND_BOX = import.meta.env.VITE_SCOPE_SAND_BOX; // スコープ
-const REDIRECT_URI_SAND_BOX = import.meta.env.VITE_REDIRECT_URI_SAND_BOX // リダイレクトURI
+const env = import.meta.env.VITE_EBAY_ENV;
+const REDIRECT_URI = env === 'production' ? import.meta.env.VITE_REDIRECT_URI : import.meta.env.VITE_REDIRECT_URI_SAND_BOX // リダイレクトURI
+const CLIENT_ID = env === 'production' ? import.meta.env.VITE_CLIENT_ID : import.meta.env.VITE_CLIENT_ID_SAND_BOX // eBayのクライアントIDとシークレット
+const EBAY_AUTH_URL = env === 'production' ? import.meta.env.VITE_EBAY_AUTH_URL : import.meta.env.VITE_EBAY_AUTH_URL_SAND_BOX // eBayの認証URL
+const SCOPE = env === 'production' ? import.meta.env.VITE_SCOPE : import.meta.env.VITE_SCOPE_SAND_BOX // スコープ
 
 export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [ebayUserId, setEbayUserId] = useState<string>('');
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const promptLogin = async (): Promise<void> => {
     // eBayの認証URLにリダイレクト
     console.log('ebayにリダイレクト')
-    const authUrl = `${EBAY_AUTH_URL_SAND_BOX}?client_id=${CLIENT_ID_SAND_BOX}&redirect_uri=${REDIRECT_URI_SAND_BOX}&response_type=code&scope=${SCOPE_SAND_BOX}&prompt=login`;
+    const authUrl = `${EBAY_AUTH_URL}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${SCOPE}&prompt=login`;
     window.location.href = authUrl;
   };
 

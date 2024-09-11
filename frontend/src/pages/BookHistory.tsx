@@ -68,7 +68,7 @@ const BookHistory: React.FC = () => {
                   <th>操作</th>
                 </tr>
               </thead>
-            {books.map((book) => {
+            {books?.map((book) => {
               return (
                 <tbody key={book.id}>
                   <tr>
