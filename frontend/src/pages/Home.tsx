@@ -6,14 +6,17 @@ import { useAuth } from '../auth/AuthProvider'
 import dayjs from 'dayjs'
 
 interface Product {
-  product_name: string;
-  close_time: Date;
+  title: string;
+  end_time: Date;
   current_price: number;
+  img_url: string;
 }
 const Home: React.FC = () => {
   const env = import.meta.env.VITE_ENV;
   const { promptLogin, uid, ebayUserId, email, loading } = useAuth()
   const [isSearched, setIsSearched] = useState(false)
+  const [notFound, setNotFound] = useState(false)
+  const [loding, setLoding] = useState(false)
   const [itemNumber, setItemNumber] = useState('')
   const [product, setProduct] = useState<Product | undefined>(undefined)
   const [bidAmount, setBidAmount] = useState('')
@@ -25,8 +28,16 @@ const Home: React.FC = () => {
   }
 
   const clickSearch = async () => {
-    const res = await axios.get(`${env === 'development' ? 'http://localhost:5001' : ''}/api/search-item?uid=${uid}&item_number=${itemNumber}`)
-    console.log('res.item', res.data.item)
+    setLoding(true)
+    setNotFound(false)
+    setIsSearched(false)
+    const res = await axios.get(`${
+        env === 'development' ? 'http://localhost:5001' : ''
+      }/api/search-item?uid=${uid}&item_number=${itemNumber}`)
+    setLoding(false)
+    if (!res.data.item) return setNotFound(true)
+
+    setNotFound(false)
     setProduct(res.data.item)
     setIsSearched(true)
   }
@@ -71,8 +82,11 @@ const Home: React.FC = () => {
         <>
           <div className='searched-product'>
             <div>
+              <img src={product?.img_url} alt="" width="200px"/>
+            </div>
+            <div>
               <p>商品名</p>
-              <p>{product?.product_name}</p>
+              <p>{product?.title}</p>
             </div>
             <div>
               <p>現在価格</p>
@@ -80,7 +94,7 @@ const Home: React.FC = () => {
             </div>
             <div>
               <p>終了日時</p>
-              <p>{dayjs(product?.close_time).format('YYYY/MM/DD hh:mm:ss')}</p></div>
+              <p>{dayjs(product?.end_time).format('YYYY/MM/DD hh:mm:ss')}</p></div>
             <div>
               <p>入札金額</p>
               <p>
@@ -106,6 +120,12 @@ const Home: React.FC = () => {
           <button onClick={clickConfirm}>登録</button>
         </>
       )}
+      {notFound &&
+        <div>商品が見つかりませんでした。 </div>
+      }
+      {loding &&
+        <div>商品を検索中</div>
+      }
 
      </div>
 

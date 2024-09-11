@@ -31,11 +31,11 @@ export const useAuth = (): AuthContextType => {
   return context;
 };
 
-const env = import.meta.env.VITE_EBAY_ENV;
-const REDIRECT_URI = env === 'production' ? import.meta.env.VITE_REDIRECT_URI : import.meta.env.VITE_REDIRECT_URI_SAND_BOX // リダイレクトURI
-const CLIENT_ID = env === 'production' ? import.meta.env.VITE_CLIENT_ID : import.meta.env.VITE_CLIENT_ID_SAND_BOX // eBayのクライアントIDとシークレット
-const EBAY_AUTH_URL = env === 'production' ? import.meta.env.VITE_EBAY_AUTH_URL : import.meta.env.VITE_EBAY_AUTH_URL_SAND_BOX // eBayの認証URL
-const SCOPE = env === 'production' ? import.meta.env.VITE_SCOPE : import.meta.env.VITE_SCOPE_SAND_BOX // スコープ
+const EBAY_ENV = import.meta.env.VITE_EBAY_ENV;
+const REDIRECT_URI = EBAY_ENV === 'production' ? import.meta.env.VITE_REDIRECT_URI : import.meta.env.VITE_REDIRECT_URI_SAND_BOX // リダイレクトURI
+const CLIENT_ID = EBAY_ENV === 'production' ? import.meta.env.VITE_CLIENT_ID : import.meta.env.VITE_CLIENT_ID_SAND_BOX // eBayのクライアントIDとシークレット
+const EBAY_AUTH_URL = EBAY_ENV === 'production' ? import.meta.env.VITE_EBAY_AUTH_URL : import.meta.env.VITE_EBAY_AUTH_URL_SAND_BOX // eBayの認証URL
+const SCOPE = EBAY_ENV === 'production' ? import.meta.env.VITE_SCOPE : import.meta.env.VITE_SCOPE_SAND_BOX // スコープ
 
 export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [ebayUserId, setEbayUserId] = useState<string>('');
@@ -120,8 +120,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const checkLinkToEbayWithBookerServer = async (): Promise<void> => {
     try {
       console.log('ebayと連携済みかをチェックする')
-      console.log('email', email)
-      const response = await axios.get(`${env === 'development' ? 'http://localhost:5001' : ''}/api/check-link-ebay?uid=${uid}`);
+      const response = await axios.get(`${import.meta.env.VITE_ENV === 'development' ? 'http://localhost:5001' : ''}/api/check-link-ebay?uid=${uid}`);
       const result = response.data.ebay_token;
       console.log('result?.user_id', result?.user_id)
       if (result) {
