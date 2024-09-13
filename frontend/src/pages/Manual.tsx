@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Manual: React.FC = () => {
   return (
@@ -21,9 +20,6 @@ const Manual: React.FC = () => {
         <p>3. 「登録」ボタンで完了。</p>
       </div>
 
-      <div>
-        <Link to="/"><button>Go to Home</button></Link>
-      </div>
     </div>
   );
 };

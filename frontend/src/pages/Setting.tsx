@@ -32,7 +32,7 @@ const Setting: React.FC = () => {
           <span>{ebayUserId || '連携されていません'}</span>
           { ebayUserId
             ? <span>連携済み</span>
-            : <button onClick={promptLogin} className="change-button">連携済み</button>
+            : <button onClick={promptLogin} >連携する</button>
           }
         </div>
       </div>

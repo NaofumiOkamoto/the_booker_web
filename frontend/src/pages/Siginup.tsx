@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -47,9 +47,6 @@ const Signup = () => {
         </div>
         <button type="submit">登録</button>
       </form>
-      <div>
-        <Link to="/"><button>Go to Home</button></Link>
-      </div>
     </div>
   );
 };

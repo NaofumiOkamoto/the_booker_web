@@ -77,7 +77,7 @@ const Home: React.FC = () => {
      <div>
       <h2>予約登録</h2>
       <input className="input" placeholder=' eBay item number' value={itemNumber} onChange={(t) => setItemNumber(t.target.value)}></input>
-      <button onClick={clickSearch} disabled={!itemNumber}>検索</button>
+      <button className={!itemNumber ? 'disable-button' : ''} onClick={clickSearch} disabled={!itemNumber}>検索</button>
       {isSearched && (
         <>
           <div className='searched-product'>
