@@ -114,8 +114,11 @@ const Home: React.FC = () => {
             </div>
             <div>
               <p>入札時間</p>
-              <p>終了<input className="input" value={seconds} onChange={(e) => setSeconds(Number(e.target.value))}></input>秒前</p>
+              <p>
+                終了 <input className="input" value={seconds} onChange={(e) => setSeconds(Number(e.target.value))}></input> 秒前
+              </p>
             </div>
+              <p>※時間帯によりeBayのシステムの負荷が高い場合がございます。入札時間を3秒以内に設定した場合、入札が遅延して入札されない可能性がございますこと、あらかじめご了承ください。</p>
           </div>
           <button onClick={clickConfirm}>登録</button>
         </>
