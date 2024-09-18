@@ -31,8 +31,35 @@ h3 {
 
 .book-edit-input {
   width: 50px;
-  height: 20px;
+  height: 30px;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 0 10px;
+}
+
+.tr-img {
+  width: 10%;
+}
+.tr-name {
+  width: 40%;
+}
+.tr-closetime {
+  width: 10%;
+}
+.tr-currente-price {
+  width: 10%;
+}
+.tr-bid-price {
+  width: 10%;
+}
+.tr-second {
+  width: 10%;
+}
+.tr-ope {
+  width: 10%;
+}
+.tr-ope > button {
+  margin: 3px 0;
+  font-size: 80%;
+  height: 38px;
 }

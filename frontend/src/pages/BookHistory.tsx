@@ -19,7 +19,8 @@ interface Book {
   created_at: Date;
 }
 const BookHistory: React.FC = () => {
-  const [filter, setFilter] = useState('reservation')
+  const [filter, setFilter] = useState<'reservation' | 'finished'>('reservation')
+  const [sort, setSort] = useState('endtime_shot')
   const [books, setBooks] = useState<Book[]>([])
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([])
   const [isEdit, setIsEdit] = useState(false)
@@ -41,24 +42,52 @@ const BookHistory: React.FC = () => {
       }/api/book?uid=${uid}`)
 
     setBooks(res.data.books)
-    changeFilter('reservation', res.data.books)
+    changeFilter('reservation', 'close_time_shortest', res.data.books)
   }
 
   useEffect(() => {
   }, [bidAmount, seconds])
 
-  const changeFilter = (filter: 'reservation' | 'finished', bookss: Book[]) => {
-    console.log('filter')
-    const filtered = bookss.filter((book) => {
-      console.log(book)
-      if (filter === 'reservation') {
-        return dayjs(book.close_time) >= dayjs()
-      } else if (filter === 'finished'){
-        return dayjs(book.close_time) <= dayjs()
+  const changeFilter = (selectFilter: 'reservation' | 'finished', selectSort: string, allBooks: Book[]) => {
+    const filtered = allBooks.filter((book) => {
+      switch (selectFilter) {
+        case 'reservation':
+          return dayjs(book.close_time) >= dayjs()
+        case 'finished':
+          return dayjs(book.close_time) <= dayjs()
+        default:
+          break;
       }
     })
+
+    switch (selectSort) {
+      case 'close_time_shortest': // close_timeまでの時間が短い順
+        if (selectFilter === 'reservation') filtered.sort((a, b) => dayjs(a.close_time).diff(dayjs(b.close_time)))
+        if (selectFilter === 'finished') filtered.sort((a, b) => dayjs(b.close_time).diff(dayjs(a.close_time)))
+        break;
+      case 'close_time_longest': // close_timeまでの時間が長い順
+        if (selectFilter === 'reservation') filtered.sort((a, b) => dayjs(b.close_time).diff(dayjs(a.close_time)))
+        if (selectFilter === 'finished') filtered.sort((a, b) => dayjs(a.close_time).diff(dayjs(b.close_time)))
+        break;
+      case 'current_price_highest': // current_priceが高い順
+        filtered.sort((a, b) => b.current_price - a.current_price);
+        break;
+      case 'current_price_lowest': // current_priceが安い順
+        filtered.sort((a, b) => a.current_price - b.current_price);
+        break;
+      case 'created_at_newest': // created_atが新しい順
+        filtered.sort((a, b) => dayjs(b.created_at).diff(dayjs(a.created_at)));
+        break;
+      case 'created_at_oldest': // created_atが古い順
+        filtered.sort((a, b) => dayjs(a.created_at).diff(dayjs(b.created_at)));
+        break;
+      default:
+        break;
+    }
+
     setFilteredBooks(filtered)
-    setFilter(filter)
+    setFilter(selectFilter)
+    setSort(selectSort)
   }
 
   const edit = (book_id: number, amo: number, seco: number) => {
@@ -121,14 +150,29 @@ const BookHistory: React.FC = () => {
         <span>全{filteredBooks.length}件</span>
         <div className="filters">
           <label>絞り込み：</label>
-          <select value={filter} onChange={(e) => {changeFilter(e.target.value as 'reservation' | 'finished', books)}}>
+          <select value={filter} onChange={(e) => {changeFilter(e.target.value as 'reservation' | 'finished', sort, books)}}>
             <option value="reservation">予約中</option>
             <option value="finished">予約終了</option>
           </select>
           <label>並べ替え：</label>
-          <select>
-            <option value="newest">閲覧日時の新しい順</option>
-          </select>
+          {filter === 'reservation' && (
+            <select value={sort} onChange={(e) => {changeFilter(filter, e.target.value, books)}}>
+              <option value="close_time_shortest">終了日時までに時間が短い順</option>
+              <option value="close_time_longest">終了日時までの時間が長い順</option>
+              <option value="current_price_highest">価格が高い順</option>
+              <option value="current_price_lowest">価格が安い順</option>
+              <option value="created_at_newest">予約登録日時が新しい順</option>
+              <option value="created_at_oldest">予約登録日時が古い順</option>
+            </select>
+          )}
+          {filter === 'finished' && (
+            <select value={sort} onChange={(e) => {changeFilter(filter, e.target.value, books)}}>
+              <option value="close_time_shortest">終了日時が新しい順</option>
+              <option value="close_time_longest">終了日時が古い順</option>
+              <option value="current_price_highest">価格が高い順</option>
+              <option value="current_price_lowest">価格が安い順</option>
+            </select>
+          )}
         </div>
       </div>
 
@@ -139,40 +183,40 @@ const BookHistory: React.FC = () => {
             <table>
               <thead>
                 <tr>
-                  <th>画像</th>
-                  <th>商品名<br />（eBay item number）</th>
-                  <th>終了日時<br />残り時間</th>
-                  <th>現在価格 <br />（送料）</th>
-                  <th>入札価格</th>
-                  <th>入札時間</th>
-                  <th>操作</th>
+                  <th className='tr-img'>画像</th>
+                  <th className='tr-name'>商品名<br />（eBay item number）</th>
+                  <th className='tr-closetime'>終了日時<br />残り時間</th>
+                  <th className='tr-currente-price'>現在価格 <br />（送料）</th>
+                  <th className='tr-bid-price'>入札価格</th>
+                  <th className='tr-second'>入札時間</th>
+                  <th className='tr-ope'>操作</th>
                 </tr>
               </thead>
             {filteredBooks?.map((book) => {
               return (
                 <tbody key={book.id}>
                   <tr>
-                    <td><img src={book?.image_url} width="100px" /></td>
-                    <td>{book.product_name}<br />({book.item_number})</td>
-                    <td>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
-                    <td>${book.current_price}<br /> {`($${book.shipping_cost})`} </td>
+                    <td className='tr-img'><img src={book?.image_url} width="100px" /></td>
+                    <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.product_name}</a><br />({book.item_number})</td>
+                    <td className='tr-closetime'>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
+                    <td className='tr-currente-price'>${book.current_price}<br /> {`($${book.shipping_cost})`} </td>
                     { isEdit && bookId === String(book.id)?
-                      <td>$<input className='book-edit-input' value={bidAmount} onChange={(t) => setBidAmount(Number(t.target.value))} /></td>
+                      <td className='tr-bid-price'>$<input className='book-edit-input' value={bidAmount} onChange={(t) => setBidAmount(Number(t.target.value))} /></td>
                       : 
-                      <td>${book.bid_amount}</td>
+                      <td className='tr-bid-price'>${book.bid_amount}</td>
                     }
                     { isEdit && bookId === String(book.id) ? 
-                      <td>終了 <input className='book-edit-input' value={seconds} onChange={(t) => setSeconds(Number(t.target.value))} />秒前</td>
+                      <td className='tr-second'>終了<br /><input className='book-edit-input' value={seconds} onChange={(t) => setSeconds(Number(t.target.value))} />秒前</td>
                       :
-                      <td>終了{book.seconds}秒前</td>
+                      <td className='tr-second'>終了<br />{book.seconds}秒前</td>
                     }
                     { isEdit && bookId === String(book.id) ?
-                      <td>
+                      <td className='tr-ope'>
                         <button onClick={() => save()}>保存</button>
                         <button onClick={() => editCancel()}>キャンセル</button>
                       </td>
                       : 
-                      <td>
+                      <td className='tr-ope'>
                         <button onClick={() => edit(book.id, book.bid_amount, book.seconds)}>編集</button>
                         <button onClick={() => clickDelete(book.id)}>削除</button>
                       </td>
@@ -187,36 +231,36 @@ const BookHistory: React.FC = () => {
       {(filter === 'finished') &&
         <>
           <h3>予約終了</h3>
-          {filteredBooks?.map((book) => {
-            return (
               <table>
                 <thead>
                   <tr>
-                    <th>画像</th>
-                    <th>商品名<br />（eBay item number）</th>
-                    <th>終了日時</th>
-                    <th>最終価格<br />（送料）</th>
-                    <th>入札価格</th>
-                    <th>入札結果</th>
-                    <th>操作</th>
+                    <th className='tr-img'>画像</th>
+                    <th className='tr-name'>商品名<br />（eBay item number）</th>
+                    <th className='tr-closetime'>終了日時</th>
+                    <th className='tr-currente-price'>最終価格<br />（送料）</th>
+                    <th className='tr-bid-price'>入札価格</th>
+                    <th className='tr-bid-price'>入札結果</th>
+                    <th className='tr-ope'>操作</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><img src={book?.image_url} width="100px" /></td>
-                    <td>{book.product_name}<br />({book.item_number})</td>
-                    <td>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
-                    <td>$99999</td>
-                    <td>$99999</td>
-                    <td>落札</td>
-                    <td>
-                      <button onClick={() => clickDelete(book.id)}>削除</button>
-                    </td>
-                  </tr>
-                </tbody>
+                {filteredBooks?.map((book) => {
+                  return (
+                  <tbody>
+                    <tr>
+                      <td className='tr-img'><img src={book?.image_url} width="100px" /></td>
+                      <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.product_name}</a><br />({book.item_number})</td>
+                      <td className='tr-closetime'>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
+                      <td className='tr-currente-price'>$99999</td>
+                      <td className='tr-bid-price'>${book.bid_amount}</td>
+                      <td className='tr-bid-price'>落札</td>
+                      <td className='tr-ope'>
+                        <button onClick={() => clickDelete(book.id)}>削除</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  )
+                })}
               </table>
-            )
-          })}
         </>
     }
     </div>
