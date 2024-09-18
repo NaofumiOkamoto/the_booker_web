@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import '../BookHistory.css';
 import { useAuth } from '../auth/AuthProvider'
+import DeleteBookModal from '../components/DeleteBookModal'
 import dayjs from 'dayjs'
 
 interface Book {
@@ -10,29 +11,94 @@ interface Book {
   item_number: string;
   product_name: string;
   seconds: number;
-  bid_amount: Float32Array;
+  bid_amount: number;
   close_time: Date;
-  current_price: Float32Array;
+  current_price: number;
+  shipping_cost: number;
+  image_url: string;
   created_at: Date;
 }
 const BookHistory: React.FC = () => {
   const [filter, setFilter] = useState('reservation')
   const [books, setBooks] = useState<Book[]>([])
+  const [isEdit, setIsEdit] = useState(false)
+  const [bidAmount, setBidAmount] = useState(0)
+  const [seconds, setSeconds] = useState(0)
+  const [bookId, setBookId] = useState('')
+  const [modal, setModal] = useState(false)
+  const [deleteId, setDeleteId] = useState('')
   const { uid } = useAuth()
   const env = import.meta.env.VITE_ENV;
 
   useEffect(() => {
-    const getBooks = async () => {
-      const res = await axios.get(`${
-          env === 'development' ? 'http://localhost:5001' : ''
-        }/api/book?uid=${uid}`)
-        setBooks(res.data.books)
-    }
     if (uid) getBooks()
   }, [uid])
 
+  const getBooks = async () => {
+    const res = await axios.get(`${
+        env === 'development' ? 'http://localhost:5001' : ''
+      }/api/book?uid=${uid}`)
+      setBooks(res.data.books)
+  }
+
+  useEffect(() => {
+  }, [bidAmount, seconds])
+
+  const edit = (book_id: number, amo: number, seco: number) => {
+    setBookId(String(book_id))
+    setIsEdit(true)
+    setBidAmount(amo)
+    setSeconds(seco)
+  }
+
+  const cancel = () => {
+    setIsEdit(false)
+    setBookId('')
+  }
+
+  const save = async () => {
+    const saveRes = await axios.put(`${env === 'development' ? 'http://localhost:5001' : ''}/api/book/${Number(bookId)}`,
+      {
+        ...{user_id: uid},
+        ...{bid_amount: Number(bidAmount)},
+        ...{seconds: seconds},
+      },
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+    console.log('saveRes', saveRes)
+    const updatedBooks = books.map(book => 
+      book.id === Number(bookId) 
+        ? { ...book, bid_amount: Number(bidAmount), seconds: seconds } 
+        : book
+    );
+    
+    setBooks(updatedBooks);
+    setIsEdit(false);
+    setBookId('');
+  }
+
+  const clickDelete = (id: number) => {
+    setDeleteId(String(id))
+    setModal(true)
+  }
+
+  const deleteBook = async (bookId: string) => {
+    const deleteRes = await axios.delete(`${env === 'development' ? 'http://localhost:5001' : ''}/api/book/${Number(bookId)}`,
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+    console.log(deleteRes)
+    getBooks()
+  }
+
   return (
     <div className="reservation-history">
+      {modal && (
+        <DeleteBookModal
+          setModal={setModal}
+          deleteBook={deleteBook}
+          deleteId={deleteId}
+        />
+      )}
       <h2>予約履歴</h2>
       <div className="summary">
         <span>全88件</span>
@@ -59,10 +125,8 @@ const BookHistory: React.FC = () => {
                 <tr>
                   <th>画像</th>
                   <th>商品名</th>
-                  <th>予約登録日時</th>
-                  <th>eBay item number</th>
+                  <th>終了日時<br />残り時間</th>
                   <th>現在価格 <br />（送料）</th>
-                  <th>終了日時 残り時間</th>
                   <th>入札価格</th>
                   <th>入札時間</th>
                   <th>操作</th>
@@ -72,18 +136,31 @@ const BookHistory: React.FC = () => {
               return (
                 <tbody key={book.id}>
                   <tr>
-                    <td>画像</td>
-                    <td>{book.product_name}</td>
-                    <td>{dayjs(book.created_at).format('YYYY/MM/DD hh:mm:ss')}</td>
-                    <td>{book.item_number}</td>
-                    <td>${book.current_price}<br /> {`(${'xxx円'})`}</td>
-                    <td>x日</td>
-                    <td>${book.bid_amount}</td>
-                    <td>終了{book.seconds}秒前</td>
-                    <td>
-                      <button>編集</button>
-                      <button>削除</button>
-                    </td>
+                    <td><img src={book?.image_url} width="100px" /></td>
+                    <td>{book.product_name}<br />({book.item_number})</td>
+                    <td>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
+                    <td>${book.current_price}<br /> {`($${book.shipping_cost})`} </td>
+                    { isEdit && bookId === String(book.id)?
+                      <td>$<input className='book-edit-input' value={bidAmount} onChange={(t) => setBidAmount(Number(t.target.value))} /></td>
+                      : 
+                      <td>${book.bid_amount}</td>
+                    }
+                    { isEdit && bookId === String(book.id) ? 
+                      <td>終了 <input className='book-edit-input' value={seconds} onChange={(t) => setSeconds(Number(t.target.value))} />秒前</td>
+                      :
+                      <td>終了{book.seconds}秒前</td>
+                    }
+                    { isEdit && bookId === String(book.id) ?
+                      <td>
+                        <button onClick={() => save()}>保存</button>
+                        <button onClick={() => cancel()}>キャンセル</button>
+                      </td>
+                      : 
+                      <td>
+                        <button onClick={() => edit(book.id, book.bid_amount, book.seconds)}>編集</button>
+                        <button onClick={() => clickDelete(book.id)}>削除</button>
+                      </td>
+                    }
                   </tr>
                 </tbody>
               )

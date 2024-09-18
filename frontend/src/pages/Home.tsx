@@ -9,19 +9,25 @@ interface Product {
   title: string;
   end_time: Date;
   current_price: number;
-  img_url: string;
+  current_price_jp: number;
+  image_url: string;
+  shipping_cost: Float32Array
+  shipping_cost_jp: Float32Array
 }
 const Home: React.FC = () => {
   const env = import.meta.env.VITE_ENV;
   const { promptLogin, uid, ebayUserId, email, loading } = useAuth()
+
   const [isSearched, setIsSearched] = useState(false)
   const [notFound, setNotFound] = useState(false)
   const [loding, setLoding] = useState(false)
+
   const [itemNumber, setItemNumber] = useState('')
   const [product, setProduct] = useState<Product | undefined>(undefined)
   const [bidAmount, setBidAmount] = useState('')
   const [bidAmountDecimal, setBidAmountDecimal] = useState('')
   const [seconds, setSeconds] = useState(5)
+
 
   const ebay = async() => {
     await promptLogin()
@@ -82,7 +88,7 @@ const Home: React.FC = () => {
         <>
           <div className='searched-product'>
             <div>
-              <img src={product?.img_url} alt="" width="200px"/>
+              <img src={product?.image_url} alt="" width="200px"/>
             </div>
             <div>
               <p>商品名</p>
@@ -90,11 +96,11 @@ const Home: React.FC = () => {
             </div>
             <div>
               <p>現在価格</p>
-              <p>${product?.current_price}</p>
+              <p>${product?.current_price} （送料: ${product?.shipping_cost}）</p>
             </div>
             <div>
               <p>終了日時</p>
-              <p>{dayjs(product?.end_time).format('YYYY/MM/DD hh:mm:ss')}</p></div>
+              <p>{product?.end_time && dayjs(product.end_time).format('YYYY/MM/DD hh:mm:ss')}</p></div>
             <div>
               <p>入札金額</p>
               <p>

@@ -28,3 +28,11 @@ table th, table td {
 h3 {
   margin-top: 20px;
 }
+
+.book-edit-input {
+  width: 50px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0 10px;
+}
