@@ -21,6 +21,7 @@ interface Book {
 const BookHistory: React.FC = () => {
   const [filter, setFilter] = useState('reservation')
   const [books, setBooks] = useState<Book[]>([])
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([])
   const [isEdit, setIsEdit] = useState(false)
   const [bidAmount, setBidAmount] = useState(0)
   const [seconds, setSeconds] = useState(0)
@@ -38,11 +39,27 @@ const BookHistory: React.FC = () => {
     const res = await axios.get(`${
         env === 'development' ? 'http://localhost:5001' : ''
       }/api/book?uid=${uid}`)
-      setBooks(res.data.books)
+
+    setBooks(res.data.books)
+    changeFilter('reservation', res.data.books)
   }
 
   useEffect(() => {
   }, [bidAmount, seconds])
+
+  const changeFilter = (filter: 'reservation' | 'finished', bookss: Book[]) => {
+    console.log('filter')
+    const filtered = bookss.filter((book) => {
+      console.log(book)
+      if (filter === 'reservation') {
+        return dayjs(book.close_time) >= dayjs()
+      } else if (filter === 'finished'){
+        return dayjs(book.close_time) <= dayjs()
+      }
+    })
+    setFilteredBooks(filtered)
+    setFilter(filter)
+  }
 
   const edit = (book_id: number, amo: number, seco: number) => {
     setBookId(String(book_id))
@@ -51,7 +68,7 @@ const BookHistory: React.FC = () => {
     setSeconds(seco)
   }
 
-  const cancel = () => {
+  const editCancel = () => {
     setIsEdit(false)
     setBookId('')
   }
@@ -101,13 +118,12 @@ const BookHistory: React.FC = () => {
       )}
       <h2>予約履歴</h2>
       <div className="summary">
-        <span>全88件</span>
+        <span>全{filteredBooks.length}件</span>
         <div className="filters">
           <label>絞り込み：</label>
-          <select value={filter} onChange={(e) => {setFilter(e.target.value)}}>
-            <option value="all">全て</option>
+          <select value={filter} onChange={(e) => {changeFilter(e.target.value as 'reservation' | 'finished', books)}}>
             <option value="reservation">予約中</option>
-            <option value="finish">予約終了</option>
+            <option value="finished">予約終了</option>
           </select>
           <label>並べ替え：</label>
           <select>
@@ -117,14 +133,14 @@ const BookHistory: React.FC = () => {
       </div>
 
     
-      {(filter === 'reservation'  || filter === 'all') &&
+      {(filter === 'reservation') &&
         <>
           <h3>予約中</h3>
             <table>
               <thead>
                 <tr>
                   <th>画像</th>
-                  <th>商品名</th>
+                  <th>商品名<br />（eBay item number）</th>
                   <th>終了日時<br />残り時間</th>
                   <th>現在価格 <br />（送料）</th>
                   <th>入札価格</th>
@@ -132,7 +148,7 @@ const BookHistory: React.FC = () => {
                   <th>操作</th>
                 </tr>
               </thead>
-            {books?.map((book) => {
+            {filteredBooks?.map((book) => {
               return (
                 <tbody key={book.id}>
                   <tr>
@@ -153,7 +169,7 @@ const BookHistory: React.FC = () => {
                     { isEdit && bookId === String(book.id) ?
                       <td>
                         <button onClick={() => save()}>保存</button>
-                        <button onClick={() => cancel()}>キャンセル</button>
+                        <button onClick={() => editCancel()}>キャンセル</button>
                       </td>
                       : 
                       <td>
@@ -168,38 +184,35 @@ const BookHistory: React.FC = () => {
             </table>
         </>
       }
-      {(filter === 'finish' || filter === 'all') &&
+      {(filter === 'finished') &&
         <>
           <h3>予約終了</h3>
-          {['a', 'b'].map(() => {
+          {filteredBooks?.map((book) => {
             return (
               <table>
                 <thead>
                   <tr>
                     <th>画像</th>
+                    <th>商品名<br />（eBay item number）</th>
                     <th>終了日時</th>
-                    <th>eBay item number</th>
-                    <th>商品名</th>
+                    <th>最終価格<br />（送料）</th>
                     <th>入札価格</th>
-                    <th>入札時間</th>
                     <th>入札結果</th>
                     <th>操作</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>画像</td>
-                    <td>2024/09/05</td>
-                    <td>987654321</td>
-                    <td>商品名</td>
-                    <td>5500円</td>
-                    <td>09:00 AM</td>
+                    <td><img src={book?.image_url} width="100px" /></td>
+                    <td>{book.product_name}<br />({book.item_number})</td>
+                    <td>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
+                    <td>$99999</td>
+                    <td>$99999</td>
                     <td>落札</td>
                     <td>
-                      <button>削除</button>
+                      <button onClick={() => clickDelete(book.id)}>削除</button>
                     </td>
                   </tr>
-                  {/* 他の予約終了の商品もここに追加 */}
                 </tbody>
               </table>
             )
