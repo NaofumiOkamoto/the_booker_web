@@ -58,7 +58,8 @@ const Setting: React.FC = () => {
         </div>
       </div>
 
-      <p className="notification-note">※ご登録されたメールアドレスへ通知いたします。</p>
+      <p className="notification-note">※ ご登録されたメールアドレスへ通知いたします。</p>
+      <p className="notification-note">※ 高値更新通知は、オークション終了5分前に1回のみ通知されます。その時点で高値更新されてない場合は通知されません。</p>
     </div>
   );
 };

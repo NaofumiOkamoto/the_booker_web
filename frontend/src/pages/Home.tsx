@@ -9,10 +9,10 @@ interface Product {
   title: string;
   end_time: Date;
   current_price: number;
-  current_price_jp: number;
+  // current_price_jp: number;
   image_url: string;
   shipping_cost: Float32Array
-  shipping_cost_jp: Float32Array
+  // shipping_cost_jp: Float32Array
 }
 const Home: React.FC = () => {
   const env = import.meta.env.VITE_ENV;
@@ -121,7 +121,30 @@ const Home: React.FC = () => {
             <div>
               <p>入札時間</p>
               <p>
-                終了 <input className="input" value={seconds} onChange={(e) => setSeconds(Number(e.target.value))}></input> 秒前
+                <label>終了</label>
+                <select value={seconds} onChange={(e) => {setSeconds(Number(e.target.value))}}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
+                  <option value="45">45</option>
+                  <option value="50">50</option>
+                  <option value="55">55</option>
+                  <option value="60">60</option>
+                </select>
+                 秒前
               </p>
             </div>
               <p>※時間帯によりeBayのシステムの負荷が高い場合がございます。入札時間を3秒以内に設定した場合、入札が遅延して入札されない可能性がございますこと、あらかじめご了承ください。</p>

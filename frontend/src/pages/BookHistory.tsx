@@ -149,12 +149,12 @@ const BookHistory: React.FC = () => {
       <div className="summary">
         <span>全{filteredBooks.length}件</span>
         <div className="filters">
-          <label>絞り込み：</label>
+          <label>ステータス</label>
           <select value={filter} onChange={(e) => {changeFilter(e.target.value as 'reservation' | 'finished', sort, books)}}>
             <option value="reservation">予約中</option>
             <option value="finished">予約終了</option>
           </select>
-          <label>並べ替え：</label>
+          <label>並べ替え</label>
           {filter === 'reservation' && (
             <select value={sort} onChange={(e) => {changeFilter(filter, e.target.value, books)}}>
               <option value="close_time_shortest">終了日時までに時間が短い順</option>
@@ -180,6 +180,7 @@ const BookHistory: React.FC = () => {
       {(filter === 'reservation') &&
         <>
           <h3>予約中</h3>
+          <p>※予約価格、予約時間の変更は、オークション終了1分前まで変更できます。</p>
             <table>
               <thead>
                 <tr>
