@@ -20,6 +20,7 @@ const Home: React.FC = () => {
 
   const [isSearched, setIsSearched] = useState(false)
   const [notFound, setNotFound] = useState(false)
+  const [duplicate, setDuplicate] = useState(false)
   const [loding, setLoding] = useState(false)
 
   const [itemNumber, setItemNumber] = useState('')
@@ -37,11 +38,15 @@ const Home: React.FC = () => {
     setLoding(true)
     setNotFound(false)
     setIsSearched(false)
+    setDuplicate(false)
     const res = await axios.get(`${
         env === 'development' ? 'http://localhost:5001' : ''
       }/api/search-item?uid=${uid}&item_number=${itemNumber}`)
     setLoding(false)
     if (!res.data.item) return setNotFound(true)
+    if (res.data.item === 'duplicate') {
+      return setDuplicate(true)
+    }
 
     setNotFound(false)
     setProduct(res.data.item)
@@ -154,6 +159,9 @@ const Home: React.FC = () => {
       )}
       {notFound &&
         <div>商品が見つかりませんでした。 </div>
+      }
+      {duplicate &&
+        <div>この商品はすでに予約済みです</div>
       }
       {loding &&
         <div>商品を検索中</div>
