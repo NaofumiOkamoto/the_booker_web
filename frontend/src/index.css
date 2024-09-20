@@ -313,3 +313,6 @@ select {
   border-radius: 5px;
   margin: 0 5px;
 }
+.watch-list {
+  margin-top: 20px;
+}

@@ -3,6 +3,7 @@ import '../index.css';
 import '/node_modules/flag-icons/css/flag-icons.min.css'
 import axios from 'axios'
 import { useAuth } from '../auth/AuthProvider'
+import WatchListModal from '../components/WatchListModal'
 import dayjs from 'dayjs'
 
 interface Product {
@@ -22,6 +23,7 @@ const Home: React.FC = () => {
   const [notFound, setNotFound] = useState(false)
   const [duplicate, setDuplicate] = useState(false)
   const [loding, setLoding] = useState(false)
+  const [watchListModal, setWatchListModal] = useState(false)
 
   const [itemNumber, setItemNumber] = useState('')
   const [product, setProduct] = useState<Product | undefined>(undefined)
@@ -70,8 +72,17 @@ const Home: React.FC = () => {
     setBidAmount('')
   }
 
+  const clickWatchList = () => {
+    setWatchListModal(true)
+  }
+
   return (
     <div className="container">
+      {watchListModal && (
+        <WatchListModal
+          setModal={setWatchListModal}
+        />
+      )}
      <main className="main-content">
        <p>The Bookerは世界最大オークション「eBay」の予約入札サービスです。</p>
       <p>オークション形式で出品されている商品に、入札する「金額」「時間」を予約登録して自動入札する便利な機能を提供しております。</p>
@@ -89,6 +100,10 @@ const Home: React.FC = () => {
       <h2>予約登録</h2>
       <input className="input" placeholder=' eBay item number' value={itemNumber} onChange={(t) => setItemNumber(t.target.value)}></input>
       <button className={!itemNumber ? 'disable-button' : ''} onClick={clickSearch} disabled={!itemNumber}>検索</button>
+
+      <div className="watch-list">
+        <button onClick={clickWatchList}>ウォッチリストから選択する</button>
+      </div>
       {isSearched && (
         <>
           <div className='searched-product'>

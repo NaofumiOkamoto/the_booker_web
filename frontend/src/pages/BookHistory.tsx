@@ -232,36 +232,36 @@ const BookHistory: React.FC = () => {
       {(filter === 'finished') &&
         <>
           <h3>予約終了</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th className='tr-img'>画像</th>
-                    <th className='tr-name'>商品名<br />（eBay item number）</th>
-                    <th className='tr-closetime'>終了日時</th>
-                    <th className='tr-currente-price'>最終価格<br />（送料）</th>
-                    <th className='tr-bid-price'>入札価格</th>
-                    <th className='tr-bid-price'>入札結果</th>
-                    <th className='tr-ope'>操作</th>
-                  </tr>
-                </thead>
-                {filteredBooks?.map((book) => {
-                  return (
-                  <tbody>
-                    <tr>
-                      <td className='tr-img'><img src={book?.image_url} width="100px" /></td>
-                      <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.product_name}</a><br />({book.item_number})</td>
-                      <td className='tr-closetime'>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
-                      <td className='tr-currente-price'>$99999</td>
-                      <td className='tr-bid-price'>${book.bid_amount}</td>
-                      <td className='tr-bid-price'>落札</td>
-                      <td className='tr-ope'>
-                        <button onClick={() => clickDelete(book.id)}>削除</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                  )
-                })}
-              </table>
+          <table>
+            <thead>
+              <tr>
+                <th className='tr-img'>画像</th>
+                <th className='tr-name'>商品名<br />（eBay item number）</th>
+                <th className='tr-closetime'>終了日時</th>
+                <th className='tr-currente-price'>最終価格<br />（送料）</th>
+                <th className='tr-bid-price'>入札価格</th>
+                <th className='tr-bid-price'>入札結果</th>
+                <th className='tr-ope'>操作</th>
+              </tr>
+            </thead>
+            {filteredBooks?.map((book) => {
+              return (
+              <tbody>
+                <tr>
+                  <td className='tr-img'><img src={book?.image_url} width="100px" /></td>
+                  <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.product_name}</a><br />({book.item_number})</td>
+                  <td className='tr-closetime'>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
+                  <td className='tr-currente-price'>$99999</td>
+                  <td className='tr-bid-price'>${book.bid_amount}</td>
+                  <td className='tr-bid-price'>落札</td>
+                  <td className='tr-ope'>
+                    <button onClick={() => clickDelete(book.id)}>削除</button>
+                  </td>
+                </tr>
+              </tbody>
+              )
+            })}
+          </table>
         </>
     }
     </div>
