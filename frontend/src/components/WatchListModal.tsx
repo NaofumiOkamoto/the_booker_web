@@ -7,14 +7,18 @@ interface Item {
   item_number: string;
   title: string;
   bid_amount: number;
-  close_time: Date;
+  end_time: Date;
   current_price: number;
   shipping_cost: number;
   image_url: string;
 }
-const WatchListModal: React.FC<{setModal: (b: boolean) => void}> = ({setModal}) => {
+const WatchListModal: React.FC<{
+  setModal: (b: boolean) => void
+  setItem: (item: Item) => void
+  setIsSearched: (b:boolean) => void
+}> = ({setModal, setItem, setIsSearched}) => {
   const env = import.meta.env.VITE_ENV;
-  const [books, setBooks] = useState<Item[]>([])
+  const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(false)
   const { uid } = useAuth()
   const handleCancel = () => {
@@ -30,10 +34,16 @@ const WatchListModal: React.FC<{setModal: (b: boolean) => void}> = ({setModal}) 
         }/api/get-watchlist?uid=${uid}`)
       setLoading(false)
       console.log(res.data.watchlist)
-      setBooks(res.data.watchlist)
+      setItems(res.data.watchlist)
     }
     getWathcList()
   }, [])
+
+  const select = (list: Item) => {
+    setItem(list)
+    setModal(false)
+    setIsSearched(true)
+  }
 
   return (
     <div id='overlay'>
@@ -44,13 +54,13 @@ const WatchListModal: React.FC<{setModal: (b: boolean) => void}> = ({setModal}) 
           <p>取得中</p>
           :
           <table>
-            {books?.map((book) => {
+            {items?.map((item) => {
               return (
-                <tbody>
+                <tbody key={item.item_number}>
                   <tr>
-                    <td className='tr-img'><img src={book.image_url} width="100px" /></td>
-                    <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.title}</a><br />({book.item_number})</td>
-                    <td className='tr-ope'><button>選択<br />（まだ）</button></td>
+                    <td className='tr-img'><img src={item.image_url} width="100px" /></td>
+                    <td className='tr-name'><a href={`https://www.ebay.com/itm/${item.item_number}`} target='_blankt'>{item.title}</a><br />({item.item_number})</td>
+                    <td className='tr-ope'><button onClick={() => select(item)}>選択<br />（まだ）</button></td>
                   </tr>
                 </tbody>
               )

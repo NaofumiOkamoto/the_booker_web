@@ -6,14 +6,15 @@ import { useAuth } from '../auth/AuthProvider'
 import WatchListModal from '../components/WatchListModal'
 import dayjs from 'dayjs'
 
-interface Product {
+interface Item {
+  id: number;
+  item_number: string;
   title: string;
+  bid_amount: number;
   end_time: Date;
   current_price: number;
-  // current_price_jp: number;
+  shipping_cost: number;
   image_url: string;
-  shipping_cost: Float32Array
-  // shipping_cost_jp: Float32Array
 }
 const Home: React.FC = () => {
   const env = import.meta.env.VITE_ENV;
@@ -26,7 +27,7 @@ const Home: React.FC = () => {
   const [watchListModal, setWatchListModal] = useState(false)
 
   const [itemNumber, setItemNumber] = useState('')
-  const [product, setProduct] = useState<Product | undefined>(undefined)
+  const [item, setItem] = useState<Item | undefined>(undefined)
   const [bidAmount, setBidAmount] = useState('')
   const [bidAmountDecimal, setBidAmountDecimal] = useState('')
   const [seconds, setSeconds] = useState(5)
@@ -51,14 +52,14 @@ const Home: React.FC = () => {
     }
 
     setNotFound(false)
-    setProduct(res.data.item)
+    setItem(res.data.item)
     setIsSearched(true)
   }
 
   const clickConfirm = async() => {
     await axios.post(`${env === 'development' ? 'http://localhost:5001' : ''}/api/book`,
       { 'book': {
-          ...product,
+          ...item,
           ...{user_id: uid},
           ...{item_number: itemNumber},
           ...{bid_amount: Number(bidAmount + '.' +bidAmountDecimal)},
@@ -81,6 +82,8 @@ const Home: React.FC = () => {
       {watchListModal && (
         <WatchListModal
           setModal={setWatchListModal}
+          setItem={setItem}
+          setIsSearched={setIsSearched}
         />
       )}
      <main className="main-content">
@@ -108,19 +111,19 @@ const Home: React.FC = () => {
         <>
           <div className='searched-product'>
             <div>
-              <img src={product?.image_url} alt="" width="200px"/>
+              <img src={item?.image_url} alt="" width="200px"/>
             </div>
             <div>
               <p>商品名</p>
-              <p>{product?.title}</p>
+              <p>{item?.title}</p>
             </div>
             <div>
               <p>現在価格</p>
-              <p>${product?.current_price} （送料: ${product?.shipping_cost}）</p>
+              <p>${item?.current_price} （送料: ${item?.shipping_cost}）</p>
             </div>
             <div>
               <p>終了日時</p>
-              <p>{product?.end_time && dayjs(product.end_time).format('YYYY/MM/DD hh:mm:ss')}</p></div>
+              <p>{item?.end_time && dayjs(item.end_time).format('YYYY/MM/DD hh:mm:ss')}</p></div>
             <div>
               <p>入札金額</p>
               <p>
