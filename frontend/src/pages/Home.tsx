@@ -77,6 +77,24 @@ const Home: React.FC = () => {
     setWatchListModal(true)
   }
 
+  const validConfirm = seconds && bidAmount && bidAmountDecimal
+
+  const handleBidAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // 数字のみ許可
+    if (/^\d*$/.test(value)) {
+      setBidAmount(value);
+    }
+  };
+
+  const handleBidAmountDecimalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // 2桁数字のみ許可
+    if (/^\d{0,2}$/.test(value)) {
+      setBidAmountDecimal(value);
+    }
+  };
+
   return (
     <div className="container">
       {watchListModal && (
@@ -130,13 +148,13 @@ const Home: React.FC = () => {
                 $<input
                   className="input"
                   value={bidAmount}
-                  onChange={(e) => setBidAmount(e.target.value)}
+                  onChange={handleBidAmountChange}
                   placeholder='0'
                 />.
                 <input
                   className="input decimal"
                   value={bidAmountDecimal}
-                  onChange={(e) => setBidAmountDecimal(e.target.value)}
+                  onChange={handleBidAmountDecimalChange}
                   placeholder='00'
                 />
               </p>
@@ -172,7 +190,7 @@ const Home: React.FC = () => {
             </div>
               <p>※時間帯によりeBayのシステムの負荷が高い場合がございます。入札時間を3秒以内に設定した場合、入札が遅延して入札されない可能性がございますこと、あらかじめご了承ください。</p>
           </div>
-          <button onClick={clickConfirm}>登録</button>
+          <button className={!validConfirm ? 'disable-button' : ''} onClick={clickConfirm} disabled={!validConfirm}>登録</button>
         </>
       )}
       {notFound &&
