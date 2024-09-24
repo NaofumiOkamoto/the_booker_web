@@ -34,7 +34,7 @@ const BookHistory: React.FC = () => {
 
   useEffect(() => {
     if (uid) getBooks()
-  }, [uid])
+  }, [uid, books])
 
   const getBooks = async () => {
     const res = await axios.get(`${
@@ -44,9 +44,6 @@ const BookHistory: React.FC = () => {
     setBooks(res.data.books)
     changeFilter('reservation', 'close_time_shortest', res.data.books)
   }
-
-  useEffect(() => {
-  }, [bidAmount, seconds])
 
   const changeFilter = (selectFilter: 'reservation' | 'finished', selectSort: string, allBooks: Book[]) => {
     const filtered = allBooks.filter((book) => {
@@ -251,7 +248,32 @@ const BookHistory: React.FC = () => {
                       <td className='tr-bid-price'>${book.bid_amount}</td>
                     }
                     { isEdit && bookId === String(book.id) ? 
-                      <td className='tr-second'>終了<br /><input className='book-edit-input' value={seconds} onChange={(t) => setSeconds(Number(t.target.value))} />秒前</td>
+                      <td className='tr-second'>終了<br />
+                        {/* <input className='book-edit-input' value={seconds} onChange={(t) => setSeconds(Number(t.target.value))} /> */}
+                        <select value={seconds} onChange={(e) => {setSeconds(Number(e.target.value))}}>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
+                          <option value="25">25</option>
+                          <option value="30">30</option>
+                          <option value="35">35</option>
+                          <option value="40">40</option>
+                          <option value="45">45</option>
+                          <option value="50">50</option>
+                          <option value="55">55</option>
+                          <option value="60">60</option>
+                        </select>
+                        秒前
+                      </td>
                       :
                       <td className='tr-second'>終了<br />{book.seconds}秒前</td>
                     }
