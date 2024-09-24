@@ -86,10 +86,10 @@ const Home: React.FC = () => {
           setIsSearched={setIsSearched}
         />
       )}
-     <main className="main-content">
-       <p>The Bookerは世界最大オークション「eBay」の予約入札サービスです。</p>
-      <p>オークション形式で出品されている商品に、入札する「金額」「時間」を予約登録して自動入札する便利な機能を提供しております。</p>
-     </main>
+      <main className="main-content">
+        <p>The Bookerは世界最大オークション「eBay」の予約入札サービスです。</p>
+        <p>オークション形式で出品されている商品に、入札したい「金額」「時間」を予約登録して、オークション終了直前に自動入札(スナイプ入札)する便利な機能を提供しております。</p>
+      </main>
 
     <div>
       {email && (ebayUserId ? <></> : (
