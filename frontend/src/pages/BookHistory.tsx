@@ -136,6 +136,45 @@ const BookHistory: React.FC = () => {
     getBooks()
   }
 
+  const calculateTimeLeft = (closeTime: Date) => {
+    const targetDate = new Date(closeTime);
+    const currentDate = new Date();
+    const difference = targetDate.getTime() - currentDate.getTime();
+
+    let timeLeft = {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    return timeLeft;
+  };
+  const [timeLefts, setTimeLefts] = useState<{ [key: string]: any }>({});
+
+  useEffect(() => {
+    const timers = filteredBooks.map((book) => {
+      return setInterval(() => {
+        setTimeLefts((prevTimeLefts) => ({
+          ...prevTimeLefts,
+          [book.id]: calculateTimeLeft(book.close_time),
+        }));
+      }, 1000);
+    });
+
+    // コンポーネントがアンマウントされる際にタイマーをクリア
+    return () => timers.forEach((timer) => clearInterval(timer));
+  }, [filteredBooks]);
+
   return (
     <div className="reservation-history">
       {modal && (
@@ -194,12 +233,17 @@ const BookHistory: React.FC = () => {
                 </tr>
               </thead>
             {filteredBooks?.map((book) => {
+              const timeLeft = timeLefts[book.id] || calculateTimeLeft(book.close_time);
               return (
                 <tbody key={book.id}>
                   <tr>
                     <td className='tr-img'><img src={book?.image_url} width="100px" /></td>
                     <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.product_name}</a><br />({book.item_number})</td>
-                    <td className='tr-closetime'>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
+                    <td className='tr-closetime'>
+                      {dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}
+                      <br />
+                      ({timeLeft.days}日{timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds})
+                    </td>
                     <td className='tr-currente-price'>${book.current_price}<br /> {`($${book.shipping_cost})`} </td>
                     { isEdit && bookId === String(book.id)?
                       <td className='tr-bid-price'>$<input className='book-edit-input' value={bidAmount} onChange={(t) => setBidAmount(Number(t.target.value))} /></td>
@@ -250,7 +294,9 @@ const BookHistory: React.FC = () => {
                 <tr>
                   <td className='tr-img'><img src={book?.image_url} width="100px" /></td>
                   <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.product_name}</a><br />({book.item_number})</td>
-                  <td className='tr-closetime'>{dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}</td>
+                  <td className='tr-closetime'>
+                    {dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}
+                  </td>
                   <td className='tr-currente-price'>$99999</td>
                   <td className='tr-bid-price'>${book.bid_amount}</td>
                   <td className='tr-bid-price'>落札</td>
