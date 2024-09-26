@@ -54,21 +54,23 @@ const Home: React.FC = () => {
     }
 
     setNotFound(false)
+    // 終了時間は世界時間で取得されるが、表示時に日本時間で表示される
     setItem(res.data.item)
     setIsSearched(true)
   }
 
   const clickConfirm = async() => {
-    await axios.post(`${env === 'development' ? 'http://localhost:5001' : ''}/api/book`,
-      { 'book': {
-          ...item,
-          ...{user_id: uid},
-          ...{item_number: itemNumber},
-          ...{bid_amount: Number(bidAmount + '.' +bidAmountDecimal)},
-          ...{seconds: seconds},
-        }
-      },
-    )
+    const params = { 
+      'book': {
+        ...item,
+        ...{user_id: uid},
+        ...{item_number: itemNumber},
+        ...{bid_amount: Number(bidAmount + '.' +bidAmountDecimal)},
+        ...{seconds: seconds},
+        ...{end_time: dayjs(item?.end_time).format('YYYY-MM-DD HH:mm:ss')}, // 日本時間で登録
+      }
+    }
+    await axios.post(`${env === 'development' ? 'http://localhost:5001' : ''}/api/book`, params)
     setIsSearched(false)
     setSeconds(5)
     setBidAmountDecimal('')
@@ -134,18 +136,19 @@ const Home: React.FC = () => {
               <img src={item?.image_url} alt="" width="200px"/>
             </div>
             <div>
-              <p>商品名</p>
+              <p>{t('title')}</p>
               <p>{item?.title}</p>
             </div>
             <div>
-              <p>現在価格</p>
+              <p>{t('current_price')}</p>
               <p>${item?.current_price} （送料: ${item?.shipping_cost}）</p>
             </div>
             <div>
-              <p>終了日時</p>
-              <p>{item?.end_time && dayjs(item.end_time).format('YYYY/MM/DD hh:mm:ss')}</p></div>
+              <p>{t('end_date')}</p>
+              {/* 終了時間は世界時間で取得されるが、表示時に日本時間で表示される */}
+              <p>{item?.end_time && dayjs(item.end_time).format('YYYY/MM/DD HH:mm:ss')}</p></div>
             <div>
-              <p>入札金額</p>
+              <p>{t('bid_price')}</p>
               <p>
                 $<input
                   className="input"
@@ -162,7 +165,7 @@ const Home: React.FC = () => {
               </p>
             </div>
             <div>
-              <p>入札時間</p>
+              <p>{t('bid_time')}</p>
               <p>
                 <label>終了</label>
                 <select value={seconds} onChange={(e) => {setSeconds(Number(e.target.value))}}>
@@ -190,7 +193,7 @@ const Home: React.FC = () => {
                  秒前
               </p>
             </div>
-              <p>※時間帯によりeBayのシステムの負荷が高い場合がございます。入札時間を3秒以内に設定した場合、入札が遅延して入札されない可能性がございますこと、あらかじめご了承ください。</p>
+              <p>*{t('bid_cautionary_note')}</p>
           </div>
           <button className={!validConfirm ? 'disable-button' : ''} onClick={clickConfirm} disabled={!validConfirm}>登録</button>
         </>

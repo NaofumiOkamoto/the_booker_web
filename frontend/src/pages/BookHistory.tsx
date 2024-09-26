@@ -240,7 +240,7 @@ const BookHistory: React.FC = () => {
                     <td className='tr-img'><img src={book?.image_url} width="100px" /></td>
                     <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.product_name}</a><br />({book.item_number})</td>
                     <td className='tr-closetime'>
-                      {dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}
+                      {dayjs(book.close_time).format('YYYY/MM/DD HH:mm:ss')}
                       <br />
                       ({timeLeft.days}日{timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds})
                     </td>
@@ -320,7 +320,7 @@ const BookHistory: React.FC = () => {
                   <td className='tr-img'><img src={book?.image_url} width="100px" /></td>
                   <td className='tr-name'><a href={`https://www.ebay.com/itm/${book.item_number}`} target='_blankt'>{book.product_name}</a><br />({book.item_number})</td>
                   <td className='tr-closetime'>
-                    {dayjs(book.close_time).format('YYYY/MM/DD hh:mm:ss')}
+                    {dayjs(book.close_time).format('YYYY/MM/DD HH:mm:ss')}
                   </td>
                   <td className='tr-currente-price'>$99999</td>
                   <td className='tr-bid-price'>${book.bid_amount}</td>
