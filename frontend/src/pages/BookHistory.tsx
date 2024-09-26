@@ -4,6 +4,7 @@ import '../BookHistory.css';
 import { useAuth } from '../auth/AuthProvider'
 import DeleteBookModal from '../components/DeleteBookModal'
 import dayjs from 'dayjs'
+import { useTranslation } from 'react-i18next';
 
 interface Book {
   id: number;
@@ -19,6 +20,7 @@ interface Book {
   created_at: Date;
 }
 const BookHistory: React.FC = () => {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState<'reservation' | 'finished'>('reservation')
   const [sort, setSort] = useState('endtime_shot')
   const [books, setBooks] = useState<Book[]>([])
@@ -34,7 +36,7 @@ const BookHistory: React.FC = () => {
 
   useEffect(() => {
     if (uid) getBooks()
-  }, [uid, books])
+  }, [uid])
 
   const getBooks = async () => {
     const res = await axios.get(`${
@@ -118,6 +120,7 @@ const BookHistory: React.FC = () => {
     setBooks(updatedBooks);
     setIsEdit(false);
     setBookId('');
+    getBooks();
   }
 
   const clickDelete = (id: number) => {
@@ -181,7 +184,7 @@ const BookHistory: React.FC = () => {
           deleteId={deleteId}
         />
       )}
-      <h2>予約履歴</h2>
+      <h2>{t('bid_history')}</h2>
       <div className="summary">
         <span>全{filteredBooks.length}件</span>
         <div className="filters">
