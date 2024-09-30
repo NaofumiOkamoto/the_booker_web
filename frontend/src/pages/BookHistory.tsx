@@ -27,6 +27,7 @@ const BookHistory: React.FC = () => {
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([])
   const [isEdit, setIsEdit] = useState(false)
   const [bidAmount, setBidAmount] = useState(0)
+  const [bidAmountDecimal, setBidAmountDecimal] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [bookId, setBookId] = useState('')
   const [modal, setModal] = useState(false)
@@ -105,7 +106,7 @@ const BookHistory: React.FC = () => {
     const saveRes = await axios.put(`${env === 'development' ? 'http://localhost:5001' : ''}/api/book/${Number(bookId)}`,
       {
         ...{user_id: uid},
-        ...{bid_amount: Number(bidAmount)},
+        ...{bid_amount: Number(bidAmount + '.' + (bidAmountDecimal ? bidAmountDecimal : 0))},
         ...{seconds: seconds},
       },
       { headers: { 'Content-Type': 'application/json' } }
@@ -113,7 +114,7 @@ const BookHistory: React.FC = () => {
     console.log('saveRes', saveRes)
     const updatedBooks = books.map(book => 
       book.id === Number(bookId) 
-        ? { ...book, bid_amount: Number(bidAmount), seconds: seconds } 
+        ? { ...book, bid_amount: Number(bidAmount + '.' + (bidAmountDecimal ? bidAmountDecimal : 0)), seconds: seconds } 
         : book
     );
     
@@ -245,7 +246,10 @@ const BookHistory: React.FC = () => {
                     </td>
                     <td className='tr-currente-price'>${book.current_price}<br /> {`($${book.shipping_cost})`} </td>
                     { isEdit && bookId === String(book.id)?
-                      <td className='tr-bid-price'>$<input className='book-edit-input' value={bidAmount} onChange={(t) => setBidAmount(Number(t.target.value))} /></td>
+                      <td className='tr-bid-price'>
+                        $<input className='book-edit-input' value={bidAmount} onChange={(t) => setBidAmount(Number(t.target.value))} />
+                        .<input className='book-edit-input' value={bidAmountDecimal} onChange={(t) => setBidAmountDecimal(Number(t.target.value))}></input>
+                      </td>
                       : 
                       <td className='tr-bid-price'>${book.bid_amount}</td>
                     }
