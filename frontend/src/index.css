@@ -177,6 +177,10 @@ button:focus-visible {
 .searched-product p {
   margin-right: 100px;
 }
+
+.searched-product-img {
+  text-align: center;
+}
 /* .auth-button-area {
   float: right;
 } */

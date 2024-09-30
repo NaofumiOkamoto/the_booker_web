@@ -151,9 +151,9 @@ const Home: React.FC = () => {
       {isSearched && (
         <>
           <div className='searched-product'>
-            <div>
-              <img src={item?.image_url} alt="" width="200px"/>
-            </div>
+            <p className='searched-product-img'>
+              <img src={item?.image_url} alt="" width="280px"/>
+            </p>
             <div>
               <p>{t('title')}</p>
               <p>{item?.title}</p>
