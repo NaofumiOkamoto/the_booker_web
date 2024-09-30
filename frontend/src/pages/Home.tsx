@@ -6,6 +6,10 @@ import { useAuth } from '../auth/AuthProvider'
 import WatchListModal from '../components/WatchListModal'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface Item {
   id: number;
@@ -69,7 +73,7 @@ const Home: React.FC = () => {
         ...item,
         ...{user_id: uid},
         ...{item_number: itemNumber},
-        ...{bid_amount: Number(bidAmount + '.' +bidAmountDecimal)},
+        ...{bid_amount: Number(bidAmount + '.' + (bidAmountDecimal ? bidAmountDecimal : 0))},
         ...{seconds: seconds},
         ...{end_time: dayjs(item?.end_time).format('YYYY-MM-DD HH:mm:ss')}, // 日本時間で登録
       }
@@ -85,7 +89,7 @@ const Home: React.FC = () => {
     setWatchListModal(true)
   }
 
-  const validConfirm = seconds && bidAmount && bidAmountDecimal
+  const validConfirm = seconds && bidAmount
 
   const handleBidAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -166,7 +170,7 @@ const Home: React.FC = () => {
             <div>
               <p>{t('end_date')}</p>
               {/* 終了時間は世界時間で取得されるが、表示時に日本時間で表示される */}
-              <p>{item?.end_time && dayjs(item.end_time).format('YYYY/MM/DD HH:mm:ss')}</p></div>
+              <p>{item?.end_time && dayjs(item.end_time).tz('Asia/Tokyo').format('YYYY/MM/DD HH:mm:ss')}</p></div>
             <div>
               <p>{t('bid_price')}</p>
               <p>
