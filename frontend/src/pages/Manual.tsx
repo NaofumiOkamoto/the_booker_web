@@ -3,7 +3,7 @@ import React from 'react';
 const Manual: React.FC = () => {
   return (
     <div className='manual-container'>
-      <h1>使い方</h1>
+      <h2>使い方</h2>
       <h3>まずはThe Bookerでアカウント作成をして、ご自身のeBayアカウントを連携してください。<br />eBay連携までの手順は以下となります。 </h3>
 
       <div className='manual-process'>

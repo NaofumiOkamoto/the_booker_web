@@ -26,7 +26,7 @@ const resources = {
       "bid_time": `Bid Time`,
       "bid_cautionary_note": `Please note that if you set within 3 seconds, your bid may not reach the eBay system due to high load of the eBay system.`,
       // 予約履歴
-      "bid_history": `Bid History`,
+      "history": `History`,
       "edit": `edit`,
       "delete": `delete`,
       "active": `Active`,
@@ -65,7 +65,7 @@ const resources = {
       "bid_time": `入札時間`,
       "bid_cautionary_note": `時間帯によりeBayのシステムの負荷が高い場合がございます。入札時間を3秒以内に設定した場合、入札が遅延して入札されない可能性がございますこと、あらかじめご了承ください。`,
       // 予約履歴
-      "bid_history": `予約履歴`,
+      "history": `予約履歴`,
       "edit": `編集`,
       "delete": `削除`,
       "active": `予約中`,

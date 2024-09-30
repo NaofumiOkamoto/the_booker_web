@@ -181,6 +181,9 @@ button:focus-visible {
 .searched-product-img {
   text-align: center;
 }
+.shipp-to {
+  margin: 15px;
+}
 /* .auth-button-area {
   float: right;
 } */

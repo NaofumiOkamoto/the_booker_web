@@ -132,17 +132,18 @@ const Home: React.FC = () => {
      <div>
       <h2>{t('add_auction')}</h2>
 
+      {/* ship to */}
+      <div className='shipp-to'>
+        <label>Ship to</label>
+        <select value={shipTo} onChange={(e) => {setShipTo(e.target.value)}}>
+          <option value="US">United States</option>
+          <option value="JP">Japan</option>
+        </select>
+      </div>
+
       <input className="input" placeholder=' eBay item number' value={itemNumber} onChange={(t) => setItemNumber(t.target.value)}></input>
       <button className={!itemNumber ? 'disable-button' : ''} onClick={clickSearch} disabled={!itemNumber}>{t('search')}</button>
 
-      {/* ship to */}
-      <div>
-        <label>ship to</label>
-        <select value={shipTo} onChange={(e) => {setShipTo(e.target.value)}}>
-          <option value="US">US</option>
-          <option value="JP">JP</option>
-        </select>
-      </div>
 
       {/* ウォッチリスト */}
       <div className="watch-list">

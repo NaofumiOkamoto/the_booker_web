@@ -185,7 +185,7 @@ const BookHistory: React.FC = () => {
           deleteId={deleteId}
         />
       )}
-      <h2>{t('bid_history')}</h2>
+      <h2>{t('history')}</h2>
       <div className="summary">
         <span>全{filteredBooks.length}件</span>
         <div className="filters">
