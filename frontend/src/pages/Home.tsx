@@ -14,7 +14,9 @@ interface Item {
   bid_amount: number;
   end_time: Date;
   current_price: number;
+  currency: string;
   shipping_cost: number;
+  shippingOptions: Array<string>;
   image_url: string;
 }
 const Home: React.FC = () => {
@@ -27,6 +29,7 @@ const Home: React.FC = () => {
   const [duplicate, setDuplicate] = useState(false)
   const [loding, setLoding] = useState(false)
   const [watchListModal, setWatchListModal] = useState(false)
+  const [shipTo, setShipTo] = useState('US')
 
   const [itemNumber, setItemNumber] = useState('')
   const [item, setItem] = useState<Item | undefined>(undefined)
@@ -46,7 +49,7 @@ const Home: React.FC = () => {
     setDuplicate(false)
     const res = await axios.get(`${
         env === 'development' ? 'http://localhost:5001' : ''
-      }/api/search-item?uid=${uid}&item_number=${itemNumber}`)
+      }/api/search-item?uid=${uid}&item_number=${itemNumber}&ship_to=${shipTo}`)
     setLoding(false)
     if (!res.data.item) return setNotFound(true)
     if (res.data.item === 'duplicate') {
@@ -56,6 +59,7 @@ const Home: React.FC = () => {
     setNotFound(false)
     // 終了時間は世界時間で取得されるが、表示時に日本時間で表示される
     setItem(res.data.item)
+    console.log(res.data.item)
     setIsSearched(true)
   }
 
@@ -123,9 +127,20 @@ const Home: React.FC = () => {
     </div>
      <div>
       <h2>{t('add_auction')}</h2>
+
       <input className="input" placeholder=' eBay item number' value={itemNumber} onChange={(t) => setItemNumber(t.target.value)}></input>
       <button className={!itemNumber ? 'disable-button' : ''} onClick={clickSearch} disabled={!itemNumber}>{t('search')}</button>
 
+      {/* ship to */}
+      <div>
+        <label>ship to</label>
+        <select value={shipTo} onChange={(e) => {setShipTo(e.target.value)}}>
+          <option value="US">US</option>
+          <option value="JP">JP</option>
+        </select>
+      </div>
+
+      {/* ウォッチリスト */}
       <div className="watch-list">
         <button onClick={clickWatchList}>{t('select_watchlist')}</button>
       </div>
@@ -141,7 +156,12 @@ const Home: React.FC = () => {
             </div>
             <div>
               <p>{t('current_price')}</p>
-              <p>${item?.current_price} （送料: ${item?.shipping_cost}）</p>
+              <p>
+                {item?.currency} {item?.current_price} <br />
+                {item?.shippingOptions?.length ? `
+                （送料: ${item?.currency} ${item?.shipping_cost}）
+                `: '選択した配送先へ配送されない場合があります。詳細はebayの商品ページを確認してください。'}
+              </p>
             </div>
             <div>
               <p>{t('end_date')}</p>

@@ -9,6 +9,7 @@ interface Item {
   bid_amount: number;
   end_time: Date;
   current_price: number;
+  currency: string;
   shipping_cost: number;
   image_url: string;
 }
