@@ -190,35 +190,34 @@ const BookHistory: React.FC = () => {
         <div className="filters">
           <label>ステータス</label>
           <select value={filter} onChange={(e) => {changeFilter(e.target.value as 'reservation' | 'finished', sort, books)}}>
-            <option value="reservation">予約中</option>
-            <option value="finished">予約終了</option>
+            <option value="reservation">{t('active')}</option>
+            <option value="finished">{t('ended')}</option>
           </select>
           <label>並べ替え</label>
           {filter === 'reservation' && (
             <select value={sort} onChange={(e) => {changeFilter(filter, e.target.value, books)}}>
-              <option value="close_time_shortest">終了日時までに時間が短い順</option>
-              <option value="close_time_longest">終了日時までの時間が長い順</option>
-              <option value="current_price_highest">価格が高い順</option>
-              <option value="current_price_lowest">価格が安い順</option>
-              <option value="created_at_newest">予約登録日時が新しい順</option>
-              <option value="created_at_oldest">予約登録日時が古い順</option>
+              <option value="close_time_shortest">{t('end_soon_to_last')}</option>
+              <option value="close_time_longest">{t('end_last_to_soon')}</option>
+              <option value="current_price_highest">{t('price_high_to_low')}</option>
+              <option value="current_price_lowest">{t('price_low_to_high')}</option>
+              <option value="created_at_newest">{t('date_new_to_old')}</option>
+              <option value="created_at_oldest">{t('date_old_to_new')}</option>
             </select>
           )}
           {filter === 'finished' && (
             <select value={sort} onChange={(e) => {changeFilter(filter, e.target.value, books)}}>
-              <option value="close_time_shortest">終了日時が新しい順</option>
-              <option value="close_time_longest">終了日時が古い順</option>
-              <option value="current_price_highest">価格が高い順</option>
-              <option value="current_price_lowest">価格が安い順</option>
+              <option value="close_time_shortest">{t('date_new_to_old')}</option>
+              <option value="close_time_longest">{t('add_old_to_new')}</option>
+              <option value="current_price_highest">{t('price_high_to_low')}</option>
+              <option value="current_price_lowest">{t('price_low_to_high')}</option>
             </select>
           )}
         </div>
       </div>
-
     
       {(filter === 'reservation') &&
         <>
-          <h3>予約中</h3>
+          <h3>{t('active')}</h3>
           <p>※予約価格、予約時間の変更は、オークション終了1分前まで変更できます。</p>
             <table>
               <thead>
@@ -300,7 +299,7 @@ const BookHistory: React.FC = () => {
       }
       {(filter === 'finished') &&
         <>
-          <h3>予約終了</h3>
+          <h3>{t('ended')}</h3>
           <table>
             <thead>
               <tr>

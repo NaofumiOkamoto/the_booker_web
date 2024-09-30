@@ -29,13 +29,23 @@ const resources = {
       "bid_history": `Bid History`,
       "edit": `edit`,
       "delete": `delete`,
+      "active": `Active`,
+      "ended": `Ended`,
+      "end_soon_to_last": `End Soon To Last`,
+      "end_last_to_soon": `End Last To Soon`,
+      "price_high_to_low": `Price High To Low`,
+      "price_low_to_high": `Price Low To High`,
+      "add_new_to_old": `Add New To Old`,
+      "add_old_to_new": `Add Old To New`,
+      "date_new_to_old": `Date New To Old`,
+      "date_old_to_new": `Date Old To New`,
 
     }
   },
   ja: {
     translation: {
       // header
-      "language": "言語",
+      "language": "Language",
       "home": "ホーム",
       "history": "履歴",
       "how_to_use": "使い方",
@@ -58,6 +68,16 @@ const resources = {
       "bid_history": `予約履歴`,
       "edit": `編集`,
       "delete": `削除`,
+      "active": `予約中`,
+      "ended": `予約終了`,
+      "end_soon_to_last": `終了日時までの時間が短い順`,
+      "end_last_to_soon": `終了日時までの時間が長い順`,
+      "price_high_to_low": `価格が高い順`,
+      "price_low_to_high": `価格が安い順`,
+      "add_new_to_old": `予約登録日時が新しい順`,
+      "add_old_to_new": `予約登録日時が古い順`,
+      "date_new_to_old": `終了日時が新しい順`,
+      "date_old_to_new": `終了日時が古い順`,
     }
   }
 };
