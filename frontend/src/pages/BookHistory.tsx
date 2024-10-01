@@ -20,7 +20,7 @@ interface Book {
   created_at: Date;
 }
 const BookHistory: React.FC = () => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [filter, setFilter] = useState<'reservation' | 'finished'>('reservation')
   const [sort, setSort] = useState('endtime_shot')
   const [books, setBooks] = useState<Book[]>([])
@@ -187,14 +187,14 @@ const BookHistory: React.FC = () => {
       )}
       <h2>{t('history')}</h2>
       <div className="summary">
-        <span>全{filteredBooks.length}件</span>
+        <span>{i18n.language === 'ja' && '全'} {filteredBooks.length} {t('bids')}</span>
         <div className="filters">
-          <label>ステータス</label>
+          <label>{t('status')}</label>
           <select value={filter} onChange={(e) => {changeFilter(e.target.value as 'reservation' | 'finished', sort, books)}}>
             <option value="reservation">{t('active')}</option>
             <option value="finished">{t('ended')}</option>
           </select>
-          <label>並べ替え</label>
+          <label>{t('sort')}</label>
           {filter === 'reservation' && (
             <select value={sort} onChange={(e) => {changeFilter(filter, e.target.value, books)}}>
               <option value="close_time_shortest">{t('end_soon_to_last')}</option>
@@ -223,13 +223,13 @@ const BookHistory: React.FC = () => {
             <table>
               <thead>
                 <tr>
-                  <th className='tr-img'>画像</th>
-                  <th className='tr-name'>商品名<br />（eBay item number）</th>
-                  <th className='tr-closetime'>終了日時<br />残り時間</th>
-                  <th className='tr-currente-price'>現在価格 <br />（送料）</th>
-                  <th className='tr-bid-price'>入札価格</th>
-                  <th className='tr-second'>入札時間</th>
-                  <th className='tr-ope'>操作</th>
+                  <th className='tr-img'>{t('image')}</th>
+                  <th className='tr-name'>{t('title')}<br />（eBay item number）</th>
+                  <th className='tr-closetime'>{t('end_date')}</th>
+                  <th className='tr-currente-price'>{t('current_price')}</th>
+                  <th className='tr-bid-price'>{t('bid_price')}</th>
+                  <th className='tr-second'>{t('bid_time')}</th>
+                  <th className='tr-ope'>{t('operation')}</th>
                 </tr>
               </thead>
             {filteredBooks?.map((book) => {
@@ -254,7 +254,7 @@ const BookHistory: React.FC = () => {
                       <td className='tr-bid-price'>${book.bid_amount}</td>
                     }
                     { isEdit && bookId === String(book.id) ? 
-                      <td className='tr-second'>終了<br />
+                      <td className='tr-second'>{i18n.language === 'ja' && '終了'}<br />
                         {/* <input className='book-edit-input' value={seconds} onChange={(t) => setSeconds(Number(t.target.value))} /> */}
                         <select value={seconds} onChange={(e) => {setSeconds(Number(e.target.value))}}>
                           <option value="1">1</option>
@@ -278,20 +278,20 @@ const BookHistory: React.FC = () => {
                           <option value="55">55</option>
                           <option value="60">60</option>
                         </select>
-                        秒前
+                        {t('seconds_before')}
                       </td>
                       :
-                      <td className='tr-second'>終了<br />{book.seconds}秒前</td>
+                      <td className='tr-second'>{i18n.language === 'ja' && '終了'}<br />{book.seconds} {t('seconds_before')}</td>
                     }
                     { isEdit && bookId === String(book.id) ?
                       <td className='tr-ope'>
-                        <button onClick={() => save()}>保存</button>
-                        <button onClick={() => editCancel()}>キャンセル</button>
+                        <button onClick={() => save()}>{t('save')}</button>
+                        <button onClick={() => editCancel()}>{t('cancel')}</button>
                       </td>
                       : 
                       <td className='tr-ope'>
-                        <button onClick={() => edit(book.id, book.bid_amount, book.seconds)}>編集</button>
-                        <button onClick={() => clickDelete(book.id)}>削除</button>
+                        <button onClick={() => edit(book.id, book.bid_amount, book.seconds)}>{t('edit')}</button>
+                        <button onClick={() => clickDelete(book.id)}>{t('delete')}</button>
                       </td>
                     }
                   </tr>
@@ -307,13 +307,13 @@ const BookHistory: React.FC = () => {
           <table>
             <thead>
               <tr>
-                <th className='tr-img'>画像</th>
-                <th className='tr-name'>商品名<br />（eBay item number）</th>
-                <th className='tr-closetime'>終了日時</th>
-                <th className='tr-currente-price'>最終価格<br />（送料）</th>
-                <th className='tr-bid-price'>入札価格</th>
-                <th className='tr-bid-price'>入札結果</th>
-                <th className='tr-ope'>操作</th>
+                <th className='tr-img'>{t('image')}</th>
+                <th className='tr-name'>{t('title')}<br />（eBay item number）</th>
+                <th className='tr-closetime'>{t('end_date')}</th>
+                <th className='tr-currente-price'>{t('end_price')}</th>
+                <th className='tr-bid-price'>{t('bid_price')}</th>
+                <th className='tr-bid-price'>{t('result')}</th>
+                <th className='tr-ope'>{t('operation')}</th>
               </tr>
             </thead>
             {filteredBooks?.map((book) => {
@@ -327,9 +327,9 @@ const BookHistory: React.FC = () => {
                   </td>
                   <td className='tr-currente-price'>$99999</td>
                   <td className='tr-bid-price'>${book.bid_amount}</td>
-                  <td className='tr-bid-price'>落札</td>
+                  <td className='tr-bid-price'>{t('won')}</td>
                   <td className='tr-ope'>
-                    <button onClick={() => clickDelete(book.id)}>削除</button>
+                    <button onClick={() => clickDelete(book.id)}>{t('delete')}</button>
                   </td>
                 </tr>
               </tbody>

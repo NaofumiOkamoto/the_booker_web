@@ -25,7 +25,7 @@ interface Item {
 }
 const Home: React.FC = () => {
   const env = import.meta.env.VITE_ENV;
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { promptLogin, uid, ebayUserId, email, loading } = useAuth()
 
   const [isSearched, setIsSearched] = useState(false)
@@ -163,8 +163,8 @@ const Home: React.FC = () => {
               <p>{t('current_price')}</p>
               <p>
                 {item?.currency} {item?.current_price} <br />
-                {item?.shippingOptions?.length ? `
-                （送料: ${item?.currency} ${item?.shipping_cost}）
+                {item?.shippingOptions?.length ? 
+                '(' + t('shipping') + `: ${item?.currency} ${item?.shipping_cost}）
                 `: '選択した配送先へ配送されない場合があります。詳細はebayの商品ページを確認してください。'}
               </p>
             </div>
@@ -192,7 +192,7 @@ const Home: React.FC = () => {
             <div>
               <p>{t('bid_time')}</p>
               <p>
-                <label>終了</label>
+                { i18n.language === 'ja' && (<label>終了</label>)}
                 <select value={seconds} onChange={(e) => {setSeconds(Number(e.target.value))}}>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -215,7 +215,7 @@ const Home: React.FC = () => {
                   <option value="55">55</option>
                   <option value="60">60</option>
                 </select>
-                 秒前
+                {t('seconds_before')}
               </p>
             </div>
               <p>*{t('bid_cautionary_note')}</p>
