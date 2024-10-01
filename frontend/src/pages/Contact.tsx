@@ -1,26 +1,26 @@
 import React from 'react';
 import '../Contact.css';  // CSSファイルをインポート
+import { useTranslation } from 'react-i18next';
 
 const Contact: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className="contact-form-container">
-      <h2>お問い合わせ</h2>
+      <h2>{t('contact_us')}</h2>
       <form>
         <div className="contact-form-group">
-          <label>お名前*</label>
+          <label>{t('name')}</label>
           <input type="text" required />
         </div>
         <div className="contact-form-group">
-          <label>メールアドレス*</label>
+          <label>{t('email')}</label>
           <input type="email" required />
         </div>
         <div className="contact-form-group">
-          <label>お問い合わせ内容*</label>
+          <label>{t('message')}</label>
           <textarea required />
         </div>
-        <button type="submit" className="contact-form-button">
-            送信する
-        </button>
+        <button type="submit" className="contact-form-button">{t('send')}</button>
       </form>
     </div>
   );

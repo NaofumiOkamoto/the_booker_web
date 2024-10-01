@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useAuth } from '../auth/AuthProvider'
 import ToggleSwitch from '../components/ToggleSwitch';
 import DeleteAccountModal from '../components/DeleteAccountModal'
+import { useTranslation } from 'react-i18next';
 
 const Setting: React.FC = () => {
+  const { t } = useTranslation();
   const { email, ebayUserId, handleLogout, promptLogin } = useAuth()
   const [success, setSuccess] = useState(false)
   const [modal, setModal] = useState(false)
@@ -18,17 +20,17 @@ const Setting: React.FC = () => {
           setModal={setModal}
         />
       )}
-      <h2 className="title">アカウント設定</h2>
+      <h2 className="title">{t('account_information')}</h2>
 
       <div className="account-info">
         <div className="info-item">
-          <span>The Bookerメールアドレス</span>
+          <span>The Booker {t('email')}</span>
           <span>{email}</span>
           {/* <button className="change-button">変更</button> */}
         </div>
 
         <div className="info-item">
-          <span>eBayアカウント</span>
+          <span>eBay {t('account')}</span>
           <span>{ebayUserId || '連携されていません'}</span>
           { ebayUserId
             ? <span>連携済み</span>
@@ -38,28 +40,28 @@ const Setting: React.FC = () => {
       </div>
 
       <div className="button-container">
-        <button className="logout-button" onClick={handleLogout}>ログアウト</button>
-        <button onClick={showModal} className="delete-button">アカウント削除</button>
+        <button className="logout-button" onClick={handleLogout}>{t('log_out')}</button>
+        <button onClick={showModal} className="delete-button">{t('delete_account')}</button>
       </div>
 
-      <h3 className="notification-title">通知設定</h3>
+      <h3 className="notification-title">{t('notification')}</h3>
 
       <div className="notification-settings">
         <div className="notification-item">
-          <ToggleSwitch label="落札成功(オークションが終了して落札が成功した時)" onChange={setSuccess} />
+          <ToggleSwitch label={t('when_won')} onChange={setSuccess} />
         </div>
 
         <div className="notification-item">
-          <ToggleSwitch label="落札失敗(オークションが終了して落札が失敗した時)" onChange={setSuccess} />
+          <ToggleSwitch label={t('when_lost')} onChange={setSuccess} />
         </div>
 
         <div className="notification-item">
-          <ToggleSwitch label="高値更新(現在価格が予約した価格を上回った時)" onChange={setSuccess} />
+          <ToggleSwitch label={t('when_outbid')} onChange={setSuccess} />
         </div>
       </div>
 
-      <p className="notification-note">※ ご登録されたメールアドレスへ通知いたします。</p>
-      <p className="notification-note">※ 高値更新通知は、オークション終了5分前に1回のみ通知されます。その時点で高値更新されてない場合は通知されません。</p>
+      <p className="notification-note">{t('notificate_description_1')}</p>
+      <p className="notification-note">{t('notificate_description_2')}</p>
     </div>
   );
 };
