@@ -329,7 +329,7 @@ const BookHistory: React.FC = () => {
                   <td className='tr-bid-price'>${book.bid_amount}</td>
                   <td className='tr-bid-price'>{t('won')}</td>
                   <td className='tr-ope'>
-                    <button onClick={() => clickDelete(book.id)}>{t('delete')}</button>
+                    <button onClick={() => clickDelete(book.id)}>削除</button>
                   </td>
                 </tr>
               </tbody>

@@ -52,6 +52,16 @@ const resources = {
       "end_price": `End Price\n(Shipping)`,
       "won": `Won`,
       "lost": `Lost`,
+      // 使い方
+      "how_to_use": `How To Use`,
+      "how_to_use_first": `First, please create an account with The Booker and link your eBay account to it.`,
+      "how_to_use_first_1": `Register an account with The Booker by clicking the “Sign Up” button in the upper right corner. `,
+      "how_to_use_first_2": `After that, you will receive an alert to link to eBay, so press the “Go to eBay Linkage Page” button to go to the eBay login screen.`,
+      "how_to_use_first_3": `After logging in to eBay with the account you wish to bid with, press the Agree button on the “Grant Application Access: The Booker” screen to complete the linkage.`,
+      "how_to_use_second": `After the linkage between The Booker and eBay is completed, you can use automatic bidding on “Add Auction” at the bottom of the home page. Please confirm the follwing procedure.`,
+      "how_to_use_second_1": `Enter the eBay item number for which you wish to reserve a bid in the “Add Auction” section at the bottom of the home page and search for the item. (Also, you can select an item from "Select From Your Watchlist" button.)`,
+      "how_to_use_second_2": `When the item you wish to reserve for bidding is displayed, set the “Bid Price” and “Bid Time".`,
+      "how_to_use_second_3": `Click the “Add” button to complete the process.`,
     }
   },
   ja: {
@@ -103,6 +113,16 @@ const resources = {
       "end_price": `最終価格\n（送料）`,
       "won": `落札成功`,
       "lost": `落札失敗`,
+      // 使い方
+      "how_to_use": `使い方`,
+      "how_to_use_first": `まずはThe Bookerでアカウント作成をして、ご自身のeBayアカウントを連携してください。\n eBay連携までの手順は以下となります。`,
+      "how_to_use_first_1": `右上の「登録」ボタンよりThe Bookerへのアカウント登録。`,
+      "how_to_use_first_2": `その後eBayへ連携するためのアラートが表示されますので、「ebay連携ページに移動する」ボタンを押すとeBayのログイン画面へ。`,
+      "how_to_use_first_3": `入札したいアカウントでeBayへログイン後、「Grant Application Access: The Booker」の画面にてAgreeボタンを押すと連携完了。`,
+      "how_to_use_second": `The BookerとeBayの連携が完了した後、ホーム下部の「予約登録」より入札予約が可能となります。予約登録の手順は以下となります。`,
+      "how_to_use_second_1": `ホーム下部の「予約登録」にて入札予約したいeBay item numberを入力して検索。(「ウォッチリストから選択する」のボタンより商品を選択することも可能です。)`,
+      "how_to_use_second_2": `入札予約したい商品が表示されたら、「入札したい価格」「入札したい時間」を設定。`,
+      "how_to_use_second_3": `「登録」ボタンで完了。`,
     }
   }
 };
