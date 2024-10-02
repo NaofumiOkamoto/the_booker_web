@@ -98,6 +98,60 @@ const resources = {
       // ウォッチリスト
       "watchlist": `Watchlist`,
       "select": `Select`,
+      // プライバシーポリシー
+      "privacy_policy": `Privacy Policy`,
+      "privacy_policy_1": `Thank you very much for using the services provided by Funcathon (hereinafter, “we/our/us”).
+                          The Privacy Policy (hereinafter, “the Policy”) sets forth our privacy information handling principles. You or users are deemed to have agreed with the Policy if you use our services.`,
+      "what_privacy": `What is privacy information?`,
+      "what_privacy_1": `Privacy information includes both personal information; and history information and characteristic information.
+                        Personal information refers to the personal information prescribed in the Act on the Protection of Personal Information or information relating to a living individual, specifically the name, date of birth, address, telephone number and other contact information, and any other described information that can identify individuals.
+                        Information other than personal information corresponds to history and characteristic information, such as services used, products purchased, history of pages/ads viewed, search keywords used by users, time and date of use, methods of using, using environment, postal code, gender, occupation, age, user’s IP address, cookie information, location information, and terminal identification information.`,
+      "how_privacy": `How do you collect privacy information?`,
+      "how_privacy_1": `We may collect personal information when a user makes a user registration or use any of our services and/or history and characteristic information of a user when a user uses any of our services or views any of the pages of our website.
+                        If a user performs settings in such a way that the use of the services is linked with any external service, we will collect the ID to be used by the user in the external service and/or the information that the user agrees to disclose to the linked service under the external service’s privacy settings.`,
+      "purpose_privacy": `For what purpose do you use privacy information?`,
+      "purpose_privacy_1": `The following gives purposes of our collection and use of privacy information.
+                            A) To present registered information including the user’s name, address, contact, and payment methods, used services, purchased products, and charges for such services/products so that users can view and/or correct their registered information and/or view the status of use
+                            B) To use an e-mail address to notify or contact users, to use contact information such as name and address in order to send products to users, contact users as necessary
+                            C) To use such information such as name, date of birth, address, telephone number, bank account number, credit card number, driving license number, and arrival of mails with delivery certificate for user identity verification
+                            D) To use payment-related information such as names/quantities of products purchased, types/periods of services used, number of times of using services, amount billed, name, address, bank account number, and credit card number, in order to charge users
+                            E) To display information registered to us on an input screen so that users can enter data easily or forward such information to external services under instructions of users
+                            F) To use information for identify individuals, such as state of using, name and address, to refuse the use of the Service by those users who violate the Terms of Use of the Service, for example, failing to pay charge and causing damage to a third party or by those users who try to use the Service for unjust/unlawful purposes
+                            G) To use information necessary for our provision of services for users, such as information about details of inquiries and billing, status of use of services by users, and contact information of users so as to answer inquires by users
+                            H) To prepare statistical data that is processed in the form that does not permit personal identification in connection with our services
+                            I) To distribute or display advertisements of us or a third party
+                            J) To use privacy information for marketing
+                            K) Purposes incidental to the purposes of using above`,
+      "provide_privacy": `Do you provide privacy information for a third party?`,
+      "provide_privacy_1": `We will not provide privacy information for a third party without the prior approval of users except for the following. However, this excludes cases in which the provision is permitted under the Act on the Protection of Personal Information or any other laws and regulations.
+                            A) Where requested under laws and regulations
+                            B) Where the provision is required for protecting human life, body or property and it is difficult to obtain an approval of the user him/herself
+                            C) Where it is especially necessary to improve public health or promote the sound growth of children and it is difficult to obtain the approval of the user him/herself
+                            D) Where it is necessary to help any national organization, a local public organization, or a contractor perform the clerical work prescribed in laws and regulations and the approval of the user him/herself could disturb the performance of the clerical work
+                            If we outsource all or part of privacy information handling to the extent necessary to achieve the purpose of the use or privacy information is provided along with succession of business due to merger or for any other reasons, it will not correspond to the provision of privacy information to a third party.
+                            We may share or disclose privacy information upon user’s request if a user links any our services with any external services when using our services.
+                            `,
+      "check_privacy": `Can I check my privacy information or request you to correct it?`,
+      "check_privacy_1": `If a user himself/herself requests the disclosure of the privacy information (excluding history or characteristic information) to the user himself/herself, we will disclose it without delay. However, if disclosure could harm the life, body, property, or other interests of the user or a third party, could cause significant hindrance to the proper performance of our business, or violates laws and regulations, we will refrain from disclosing all or part of the information. If we decide not to disclose the information, we will inform you without delay.
+                          We will charge you 1000 yen for each instance of disclosure of personal information.
+                          If any user’s personal information we own is incorrect, the user can request us to correct or delete the personal information by the procedure stipulated by us. If a user makes such a request and we judge it is necessary to meet the request, we will correct or delete the personal information and inform the user without delay.
+                          `,
+      "request_privacy": `Can I request you to discontinue the use of my privacy information?`,
+      "request_privacy_1": `When the user requests discontinuation of the use of his/her privacy information (hereinafter, “Discontinuation of the Use”) claiming the privacy information is handled beyond the scope of the purposes of use or the privacy information is obtained by unjust means, we will conduct a necessary investigation, and based on the outcome of the investigation make take measures such as Discontinuation of the Use, and inform the user without delay.
+                            However, we will take alternative measures if Discontinuation of the Use of privacy information involves an inordinate expense or if it is difficult and alternative measures are possible so as to protect rights and benefits of the users`,
+      "change_privacy": `Change of Privacy Policy`,
+      "change_privacy_1": `This Privacy Policy is subject to changes without notice to users.
+                          The changed Privacy Policy will take effect when it is placed on this website unless otherwise specified by us.
+                          `,
+      "contact_privacy": `Inquiry contact`,
+      "contact_privacy_1": `If you have any question about the policy, please contact us at the following contact
+                            E-mail address: thebooker.jp@gmail.com
+                            Established on: October 1, 2024
+                            `,
+      // 利用規約
+      "terms_of_use": `Terms of Use`,
+
+
     }
   },
   ja: {
@@ -195,6 +249,58 @@ const resources = {
       // ウォッチリスト
       "watchlist": `ウォッチリスト`,
       "select": `選択`,
+      // プライバシーポリシー
+      "privacy_policy": `プライバシーポリシー`,
+      "privacy_policy_1": `Funcathon（以下、「当社」といいます。）のサービスをご利用いただきありがとうございます。
+                          このプライバシーポリシー（以下、「本ポリシー」といいます。）は、当社におけるプライバシー情報の取扱方針です。ユーザーの皆さまが当社のサービスを利用した場合には、本ポリシーに同意したものとみなされます。
+                          `,
+      "what_privacy": `プライバシー情報とは何ですか？`,
+      "what_privacy_1": `プライバシー情報とは、「個人情報」と「履歴情報および特性情報」の両方です。
+                        「個人情報」とは、個人情報保護法にいう「個人情報」を指し、生存する個人に関する情報であって、当該情報に含まれる氏名、生年月日、住所、電話番号、連絡先その他の記述等により特定の個人を識別できる情報を指します。
+                        「履歴情報および特性情報」とは、「個人情報」以外のもので、ご利用いただいたサービスやご購入いただいた商品、ご覧になったページや広告の履歴、ユーザーが検索された検索キーワード、ご利用日時、ご利用の方法、ご利用環境、郵便番号や性別、職業、年齢、ユーザーのIPアドレス、クッキー情報、位置情報、端末の個体識別情報などを指します。`,
+      "how_privacy": `どのようにプライバシー情報を収集するのですか？`,
+      "how_privacy_1": `当社は、ユーザーが当社のサービスに利用登録をしまたは利用する際に「個人情報
+                        を、ユーザーが当社のサービスを利用しまたはページを閲覧する際にユーザーの「履歴情報および特性情報を、それぞれ収集することがあります。
+                        また，ユーザーが本サービスを利用するにあたり、外部サービスとの連携を設定した場合には、その外部サービスでユーザーが利用するIDやその他その外部サービスのプライバシー設定によりユーザーが連携先に開示を認めた情報を、その外部サービスから収集します。`,
+      "purpose_privacy": `プライバシー情報はどのような目的で利用されますか？`,
+      "purpose_privacy_1": `当社がプライバシー情報を収集・利用する目的は、次のとおりです。
+                            ア）ユーザーに自分の登録情報の閲覧や修正、利用状況の閲覧を行っていただくために、氏名、住所、連絡先、支払方法などの登録情報、利用されたサービスや購入された商品、およびそれらの代金などに関する情報を表示する目的
+                            イ）ユーザーにお知らせや連絡をするためにメールアドレスを利用する場合やユーザーに商品を送付したり必要に応じて連絡したりするため、氏名や住所などの連絡先情報を利用する目的
+                            ウ）ユーザーの本人確認を行うために、氏名、生年月日、住所、電話番号、銀行口座番号、クレジットカード番号、運転免許証番号、配達証明付き郵便の到達結果などの情報を利用する目的
+                            エ）ユーザーに代金を請求するために、購入された商品名や数量、利用されたサービスの種類や期間、回数、請求金額、氏名、住所、銀行口座番号やクレジットカード番号などの支払に関する情報などを利用する目的
+                            オ）ユーザーが簡便にデータを入力できるようにするために、当社に登録されている情報を入力画面に表示させたり、ユーザーのご指示に基づいて外部のサービスなどに転送したりする目的
+                            カ）代金の支払を遅滞したり第三者に損害を発生させたりするなど、本サービスの利用規約に違反したユーザーや、不正・不当な目的でサービスを利用しようとするユーザーの利用をお断りするために、利用態様、氏名や住所など個人を特定するための情報を利用する目的
+                            キ）ユーザーからのお問い合わせに対応するために、お問い合わせ内容や代金の請求に関する情報など当社がユーザーに対してサービスを提供するにあたって必要となる情報や、ユーザーのサービス利用状況、連絡先情報などを利用する目的
+                            ク）当社のサービスに関連して、個人を識別できない形式に加工した統計データを作成する目的
+                            ケ）当社又は第三者の広告の配信又は表示をする目的
+                            コ）マーケティングに利用する目的
+                            サ）上記の各利用目的に付随する目的
+                            `,
+      "provide_privacy": `プライバシー情報は第三者に提供されることがありますか？`,
+      "provide_privacy_1": `当社は、次に掲げる場合を除いて、あらかじめユーザーの同意を得ることなく、第三者にプライバシー情報を提供することはありません。ただし、個人情報保護法その他の法令で認められる場合を除きます。
+                            ア） 法令に基づく場合
+                            イ） 人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき
+                            ウ） 公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって、本人の同意を得ることが困難であるとき
+                            エ） 国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって、本人の同意を得ることにより当該事務の遂行に支障を及ぼすおそれがあるとき
+                            もっとも、当社が利用目的の達成に必要な範囲内においてプライバシー情報の取扱いの全部または一部を委託する場合や合併その他の事由による事業の承継に伴ってプライバシー情報が提供される場合は、プライバシー情報の第三者提供には該当しないものとします。
+                            なお，当社は、ユーザーが，当社のサービスを外部サービスと連携させて利用する等の場合には、ユーザーからの依頼に従って、プライバシー情報を共有または開示することがあります。
+                            `,
+      "check_privacy": `自分のプライバシー情報を確認したり、訂正を求めることができますか？`,
+      "check_privacy_1": `当社は、本人から「個人情報」（「履歴情報および特性情報」を含みません。）の開示を求められたときは、本人に対し、遅滞なくこれを開示します。ただし、開示することにより、本人または第三者の生命、身体、財産その他の権利利益を害するおそれがある場合、当社の業務の適正な実施に著しい支障を及ぼすおそれがある場合または法令に違反することとなる場合は、その全部または一部を開示しないこともあり、開示しない決定をした場合には、その旨を遅滞なく通知します。
+                          なお、個人情報の開示に際しては、1件あたり1,000円の手数料を申し受けます。
+                          また、ユーザーは、当社の保有する自己の個人情報が誤った情報である場合には、当社が定める手続きにより、当社に対して個人情報の訂正または削除を請求することができます。　当社は、ユーザーからこれらの請求を受けてその請求に応じる必要があると判断した場合には、遅滞なく、当該個人情報の訂正または削除を行い、これをユーザーに通知します。
+                          `,
+      "request_privacy": `プライバシー情報の利用停止を求めることができますか？`,
+      "request_privacy_1": `当社は、本人から、プライバシー情報が、利用目的の範囲を超えて取り扱われているという理由、または不正の手段により取得されたものであるという理由により、その利用の停止または消去（以下、「利用停止等」といいます。）を求められた場合には、遅滞なく必要な調査を行い、その結果に基づき、プライバシー情報の利用停止等を行い、その旨本人に通知します。
+                            ただし、プライバシー情報の利用停止等に多額の費用を要する場合その他利用停止等を行うことが困難な場合であって、本人の権利利益を保護するために必要なこれに代わるべき措置をとれる場合は、この代替策を講じます。`,
+      "change_privacy": `プライバシーポリシーの変更`,
+      "change_privacy_1": `本ポリシーの内容は、ユーザーに通知することなく、変更することができるものとします。
+                          当社が別途定める場合を除いて、変更後のプライバシーポリシーは、本ウェブサイトに掲載したときから効力を生じるものとします。`,
+      "contact_privacy": `お問い合わせ窓口`,
+      "contact_privacy_1": `本ポリシーに関するお問い合わせは、下記の窓口までお願いいたします。
+                            Ｅメールアドレス：thebooker.jp@gmail.com
+                            制定日　2024年10月1日
+                            `,
     }
   }
 };

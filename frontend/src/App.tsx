@@ -11,7 +11,10 @@ import Fee from './pages/Fee';
 import Qestion from './pages/Qestion';
 import Contact from './pages/Contact';
 import Setting from './pages/Setting';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfUse from './pages/TermsOfUse';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import './App.css'
 
 const App: React.FC = () => {
@@ -30,7 +33,10 @@ const App: React.FC = () => {
           <Route path="/question" element={<Qestion />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/setting" element={<Setting />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-use" element={<TermsOfUse />} />
         </Routes>
+        <Footer />
       </AuthProvider>
     </Router>
   )
