@@ -30,8 +30,8 @@ const resources = {
       // 予約履歴
       "history": `History`,
       "bids": `Bids`,
-      "edit": `edit`,
-      "delete": `delete`,
+      "edit": `Edit`,
+      "delete": `Delete`,
       "save": `Save`,
       "cancel": `Cancel`,
       "active": `Active`,
@@ -52,6 +52,7 @@ const resources = {
       "end_price": `End Price\n(Shipping)`,
       "won": `Won`,
       "lost": `Lost`,
+      "bid_change": `* You can change "Bid Price" and "Bid Time" at least 1 minute before the end of the auction.`,
       // 使い方
       "how_to_use": `How To Use`,
       "how_to_use_first": `First, please create an account with The Booker and link your eBay account to it.`,
@@ -94,7 +95,9 @@ const resources = {
       "when_outbid": `Outbid(When the current price exceeds your reserved bid price)`,
       "notificate_description_1": `*Notification will be sent to your registered Email.`,
       "notificate_description_2": `*Outbid notification will be sent only once, 5 minutes before the end of the auction. If the high price has not been renewed at that time, no notification will be sent.`,
-      "": ``,
+      // ウォッチリスト
+      "watchlist": `Watchlist`,
+      "select": `Select`,
     }
   },
   ja: {
@@ -146,6 +149,7 @@ const resources = {
       "end_price": `最終価格\n（送料）`,
       "won": `落札成功`,
       "lost": `落札失敗`,
+      "bid_change": `※予約価格、予約時間の変更は、オークション終了1分前まで変更できます。`,
       // 使い方
       "how_to_use": `使い方`,
       "how_to_use_first": `まずはThe Bookerでアカウント作成をして、ご自身のeBayアカウントを連携してください。\n eBay連携までの手順は以下となります。`,
@@ -188,6 +192,9 @@ const resources = {
       "when_outbid": `高値更新(現在価格が予約した価格を上回った時)`,
       "notificate_description_1": `※ ご登録されたメールアドレスへ通知いたします。`,
       "notificate_description_2": `※ 高値更新通知は、オークション終了5分前に1回のみ通知されます。その時点で高値更新されてない場合は通知されません。`,
+      // ウォッチリスト
+      "watchlist": `ウォッチリスト`,
+      "select": `選択`,
     }
   }
 };

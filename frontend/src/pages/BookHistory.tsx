@@ -219,7 +219,7 @@ const BookHistory: React.FC = () => {
       {(filter === 'reservation') &&
         <>
           <h3>{t('active')}</h3>
-          <p>※予約価格、予約時間の変更は、オークション終了1分前まで変更できます。</p>
+          <p>{t('bid_change')}</p>
             <table>
               <thead>
                 <tr>
@@ -329,7 +329,7 @@ const BookHistory: React.FC = () => {
                   <td className='tr-bid-price'>${book.bid_amount}</td>
                   <td className='tr-bid-price'>{t('won')}</td>
                   <td className='tr-ope'>
-                    <button onClick={() => clickDelete(book.id)}>削除</button>
+                    <button onClick={() => clickDelete(book.id)}>{('delete')}</button>
                   </td>
                 </tr>
               </tbody>

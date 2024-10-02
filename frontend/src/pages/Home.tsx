@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import ReactLoading from 'react-loading';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -230,7 +231,9 @@ const Home: React.FC = () => {
         <div>この商品はすでに予約済みです</div>
       }
       {loding &&
-        <div>商品を検索中</div>
+        <div className="loading-container">
+          <ReactLoading type={'spokes'} color={'#000'} height={50} width={50} />
+        </div>
       }
 
      </div>

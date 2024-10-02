@@ -220,20 +220,48 @@ justify-content: center;
 
 }
 .modal {
+  position: relative;
   z-index:2;
   width:50%;
   padding: 2em;
   background:#fff;
   border-radius: 10px;
 }
+.modal > h3 {
+  margin: 0 0 20px 0;
+}
 
 .modal button {
   margin: 20px 40px;
 }
+
+.modal > .cancel-button {
+  position: absolute;
+  top: -25px;
+  right: -45px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+.modal > .cancel-button:hover {
+  color: #000;
+}
+
 .modal > .link-button {
   background-color:#3665f3;
   color: #fff;
   font-weight: bold;
+}
+.table-container {
+  max-height: 300px;
+  overflow: auto;
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
 }
 
 /* アカウント設定 */

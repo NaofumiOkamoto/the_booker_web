@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import { useAuth } from '../auth/AuthProvider'
+import ReactLoading from 'react-loading';
+import { useTranslation } from 'react-i18next';
 
 interface Item {
   id: number;
@@ -18,6 +20,7 @@ const WatchListModal: React.FC<{
   setItem: (item: Item) => void
   setIsSearched: (b:boolean) => void
 }> = ({setModal, setItem, setIsSearched}) => {
+  const { t } = useTranslation();
   const env = import.meta.env.VITE_ENV;
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(false)
@@ -49,24 +52,28 @@ const WatchListModal: React.FC<{
   return (
     <div id='overlay'>
       <div className='modal'>
-        <h3>ウォッチリスト</h3>
-        <button className="cancel-button" onClick={handleCancel}>閉じる</button>
+        <button className="cancel-button" onClick={handleCancel}>×</button>
+        <h3>{t('watchlist')}</h3>
         {loading ?
-          <p>取得中</p>
+          <div className="loading-container">
+            <ReactLoading type={'spokes'} color={'#000'} height={50} width={50} />
+          </div>
           :
-          <table>
+          <div className="table-container">
+            <table>
             {items?.map((item) => {
               return (
                 <tbody key={item.item_number}>
                   <tr>
                     <td className='tr-img'><img src={item.image_url} width="100px" /></td>
                     <td className='tr-name'><a href={`https://www.ebay.com/itm/${item.item_number}`} target='_blankt'>{item.title}</a><br />({item.item_number})</td>
-                    <td className='tr-ope'><button onClick={() => select(item)}>選択<br />（まだ）</button></td>
+                    <td className='tr-ope'><button onClick={() => select(item)}>{t('select')}</button></td>
                   </tr>
                 </tbody>
               )
             })}
-          </table>
+            </table>
+          </div>
         }
       </div>
     </div>
