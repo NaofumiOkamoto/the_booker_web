@@ -5,8 +5,29 @@ const TermsOfUse: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className='manual-container'>
+    <div className='privacy-policy-container'>
       <h2>{t('terms_of_use')}</h2>
+      <p>{t('terms_of_use_1')}</p>
+      <h2>{t('user_registration')}</h2>
+      <p>{t('user_registration_1')}</p>
+      <h2>{t('management_terms')}</h2>
+      <p>{t('management_terms_1')}</p>
+      <h2>{t('use_service')}</h2>
+      <p>{t('use_service_1')}</p>
+      <h2>{t('charge_and_payment')}</h2>
+      <p>{t('charge_and_payment_1')}</p>
+      <h2>{t('personal_information')}</h2>
+      <p>{t('personal_information_1')}</p>
+      <h2>{t('discontinuation')}</h2>
+      <p>{t('discontinuation_1')}</p>
+      <h2>{t('limitation_liability')}</h2>
+      <p>{t('limitation_liability_1')}</p>
+      <h2>{t('changes_in_details')}</h2>
+      <p>{t('changes_in_details_1')}</p>
+      <h2>{t('notice_or_contact')}</h2>
+      <p>{t('notice_or_contact_1')}</p>
+      <h2>{t('governing_law')}</h2>
+      <p>{t('governing_law_1')}</p>
     </div>
   );
 };
