@@ -30,8 +30,7 @@ const Home: React.FC = () => {
   const { promptLogin, uid, ebayUserId, email, loading } = useAuth()
 
   const [isSearched, setIsSearched] = useState(false)
-  const [notFound, setNotFound] = useState(false)
-  const [duplicate, setDuplicate] = useState(false)
+  const [alert, setAlert] = useState('')
   const [loding, setLoding] = useState(false)
   const [watchListModal, setWatchListModal] = useState(false)
   const [shipTo, setShipTo] = useState('US')
@@ -49,19 +48,17 @@ const Home: React.FC = () => {
 
   const clickSearch = async () => {
     setLoding(true)
-    setNotFound(false)
+    setAlert('')
     setIsSearched(false)
-    setDuplicate(false)
     const res = await axios.get(`${
         env === 'development' ? 'http://localhost:5001' : ''
       }/api/search-item?uid=${uid}&item_number=${itemNumber}&ship_to=${shipTo}`)
     setLoding(false)
-    if (!res.data.item) return setNotFound(true)
-    if (res.data.item === 'duplicate') {
-      return setDuplicate(true)
-    }
+    if (!res.data.item) return setAlert('商品が見つかりませんでした')
+    if (res.data.item === 'duplicate') return setAlert('この商品はすでに予約済みです')
+    if (res.data.item === 'not_auction') return setAlert('この商品はオークション対象ではありません')
 
-    setNotFound(false)
+    setAlert('')
     // 終了時間は世界時間で取得されるが、表示時に日本時間で表示される
     setItem(res.data.item)
     console.log(res.data.item)
@@ -224,12 +221,7 @@ const Home: React.FC = () => {
           <button className={!validConfirm ? 'disable-button' : ''} onClick={clickConfirm} disabled={!validConfirm}>登録</button>
         </>
       )}
-      {notFound &&
-        <div>商品が見つかりませんでした。 </div>
-      }
-      {duplicate &&
-        <div>この商品はすでに予約済みです</div>
-      }
+      {alert && <div>{alert}</div> }
       {loding &&
         <div className="loading-container">
           <ReactLoading type={'spokes'} color={'#000'} height={50} width={50} />
