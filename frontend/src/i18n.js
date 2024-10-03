@@ -146,13 +146,13 @@ const resources = {
       "contact_privacy_3": `Established on: October 1, 2024`,
       // 利用規約
       "terms_of_use": `Terms of Use`,
-      "terms_of_use_1": `Thank you for using the service "The Booker" (hereinafter referred to as "this service") provided by Funcathon (hereinafter referred to as "our company").
-                        Users are kindly requested to follow the Terms of Use when using the Service.`,
+      "terms_of_use_1": `Thank you for using the service "The Booker" (hereinafter referred to as "this service") provided by Funcathon (hereinafter referred to as "our company").`,
+      "terms_of_use_2": `Users are kindly requested to follow the Terms of Use when using the Service.`,
       "user_registration": `User registration`,
       "user_registration_1": `User registration will be completed when we approve an application for registration by an applicant. We may not approve an application for registration if we judge it inappropriate; for example, the applicant violated the Terms of Use in the past. We will not disclose reasons for rejection.`,
       "management_terms": `Management of user name`,
-      "management_terms_1": `Users should manage their user names and passwords for the Service under their responsibility. Do not let others know your password to protect your user name.
-                            Users must not assign or lend their user names or passwords to a third party. If a combination of a user name with a password corresponds to the registered data in logging in, we will regard it as being used by the user who registered the user name. If you find unauthorized use of your user name, promptly report to us.`,
+      "management_terms_1": `Users should manage their user names and passwords for the Service under their responsibility. Do not let others know your password to protect your user name.`,
+      "management_terms_2": `Users must not assign or lend their user names or passwords to a third party. If a combination of a user name with a password corresponds to the registered data in logging in, we will regard it as being used by the user who registered the user name. If you find unauthorized use of your user name, promptly report to us.`,
       "use_service": `Use of the Service`,
       "use_service_1": `Users must not commit wrongdoing in use of the Service, for example, destroying or disturbing functions of our servers/networks. If we judge any act of a user a wrongdoing, we may restrict the user’s use of the Service or terminate the user’s registration without prior notice. In this case, we shall bear no liability for any damages the user incurs arising from the restricted use and the like.`,
       "charge_and_payment": `Charge and payment`,
@@ -162,25 +162,20 @@ const resources = {
       "discontinuation": `Discontinuation of the Service`,
       "discontinuation_1": `We may discontinue or halt the provision of the Service without prior notice to users if we judge it is difficult to provide the Service, for example, when carrying out maintenance and inspection or updating the computer system relating to the Service. We accept no liability for disadvantage or damage a user or a third party incurs arising the discontinued or halted provision of the Service irrespective of the reason.`,
       "limitation_liability": `Disclaimer of Warranties and Limitation of Liability`,
-      "limitation_liability_1": `We pay reasonable attention when providing the Service. However, we do not guarantee that there are no factual or legal defects in the Service (including deficiencies relating to safety, reliability, accuracy, integrity, efficacy, compatibility with specific purposes, security; errors; bugs; infringement of rights).
-                                We bear no liability for any damages users incur through the Service except in cases of intentional or gross negligence. Even if we are legally liable, we bear no liability for damages arising from special circumstances.
-                                `,
+      "limitation_liability_1": `We pay reasonable attention when providing the Service. However, we do not guarantee that there are no factual or legal defects in the Service (including deficiencies relating to safety, reliability, accuracy, integrity, efficacy, compatibility with specific purposes, security; errors; bugs; infringement of rights).`,
+      "limitation_liability_2": `We bear no liability for any damages users incur through the Service except in cases of intentional or gross negligence. Even if we are legally liable, we bear no liability for damages arising from special circumstances.`,
       "changes_in_details": `Changes in details of the Service and/or Terms of Use`,
-      "changes_in_details_1": `Due to continuous changes and improvements of the Service, we may delete posted data, change details or conditions of use of the Service, or discontinue the provision of the Service without notice to users. We shall bear no liability for damage the user incurs arising from any of the cases above.
-                              We reserve the right to modify the Terms of Use without requiring individual user consent in the following cases
-                              (1) If the modification of the Terms of Use conforms to the general interest of the users.
-                              (2) If the modification of the Terms of Use is not contrary to the purpose of this agreement , and it is reasonable in light of the necessity of the modification, reasonableness of the modified content, and other circumstances pertaining to the modification.
-                              When modifying the Terms of Use, we will notify users in advance of the modification, the contents of the modified Terms of Service, and the effective date of the modification.
-                              `,
+      "changes_in_details_1": `Due to continuous changes and improvements of the Service, we may delete posted data, change details or conditions of use of the Service, or discontinue the provision of the Service without notice to users. We shall bear no liability for damage the user incurs arising from any of the cases above.`,
+      "changes_in_details_2": `We reserve the right to modify the Terms of Use without requiring individual user consent in the following cases`,
+      "changes_in_details_3": `(1) If the modification of the Terms of Use conforms to the general interest of the users.`,
+      "changes_in_details_4": `(2) If the modification of the Terms of Use is not contrary to the purpose of this agreement , and it is reasonable in light of the necessity of the modification, reasonableness of the modified content, and other circumstances pertaining to the modification.`,
+      "changes_in_details_5": `When modifying the Terms of Use, we will notify users in advance of the modification, the contents of the modified Terms of Service, and the effective date of the modification.`,
       "notice_or_contact": `Notice or contact`,
       "notice_or_contact_1": `We give notice to and make contact with users by methods specified by us.`,
       "governing_law": `Governing law and jurisdiction`,
-      "governing_law_1": `The interpretation of the terms is governed by laws of Japan.
-                          In the event of any disputes arising from the Service, Tokyo District Court or Tokyo Summary Court shall have an agreed exclusive jurisdiction.
-                          Established on October 1, 2024
-                        `,
-
-
+      "governing_law_1": `The interpretation of the terms is governed by laws of Japan.`,
+      "governing_law_2": `In the event of any disputes arising from the Service, Tokyo District Court or Tokyo Summary Court shall have an agreed exclusive jurisdiction.`,
+      "governing_law_3": `Established on October 1, 2024`,
     }
   },
   ja: {
@@ -288,7 +283,7 @@ const resources = {
       "what_privacy_3": `「履歴情報および特性情報」とは、「個人情報」以外のもので、ご利用いただいたサービスやご購入いただいた商品、ご覧になったページや広告の履歴、ユーザーが検索された検索キーワード、ご利用日時、ご利用の方法、ご利用環境、郵便番号や性別、職業、年齢、ユーザーのIPアドレス、クッキー情報、位置情報、端末の個体識別情報などを指します。`,
       "how_privacy": `どのようにプライバシー情報を収集するのですか？`,
       "how_privacy_1": `当社は、ユーザーが当社のサービスに利用登録をしまたは利用する際に「個人情報」を、ユーザーが当社のサービスを利用しまたはページを閲覧する際にユーザーの「履歴情報および特性情報」を、それぞれ収集することがあります。`,
-      "how_privacy_1": `また，ユーザーが本サービスを利用するにあたり、外部サービスとの連携を設定した場合には、その外部サービスでユーザーが利用するIDやその他その外部サービスのプライバシー設定によりユーザーが連携先に開示を認めた情報を、その外部サービスから収集します。`,
+      "how_privacy_2": `また，ユーザーが本サービスを利用するにあたり、外部サービスとの連携を設定した場合には、その外部サービスでユーザーが利用するIDやその他その外部サービスのプライバシー設定によりユーザーが連携先に開示を認めた情報を、その外部サービスから収集します。`,
       "purpose_privacy": `プライバシー情報はどのような目的で利用されますか？`,
       "purpose_privacy_1": `当社がプライバシー情報を収集・利用する目的は、次のとおりです。`,
       "purpose_privacy_2": `ア）ユーザーに自分の登録情報の閲覧や修正、利用状況の閲覧を行っていただくために、氏名、住所、連絡先、支払方法などの登録情報、利用されたサービスや購入された商品、およびそれらの代金などに関する情報を表示する目的`,
@@ -326,13 +321,13 @@ const resources = {
       "contact_privacy_3": `制定日　2024年10月1日`,
       // 利用規約
       "terms_of_use": `利用規約`,
-      "terms_of_use_1": `Funcathon（以下、「当社」といいます。）が提供するサービス「The Booker」（以下、「本サービス」といいます。）をご利用いただきありがとうございます。
-ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。`,
+      "terms_of_use_1": `Funcathon（以下、「当社」といいます。）が提供するサービス「The Booker」（以下、「本サービス」といいます。）をご利用いただきありがとうございます。`,
+      "terms_of_use_2": `ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。`,
       "user_registration": `ユーザー登録`,
       "user_registration_1": `希望者からの登録申請を当社が承認することでユーザー登録が完了します。当社は、本規約に違反したことがある方からの申請である場合など、ユーザー登録を相当でないと判断した場合には、登録申請を承認しないことがあり、その理由については開示しません。`,
       "management_terms": `ユーザー名の管理`,
-      "management_terms_1": `ユーザーは、自己の責任で、本サービスのユーザー名とパスワードを管理してください。ユーザー名を保護するため、パスワードは他人に知らせないでください。
-                            また、ユーザーは、いかなる場合にも、ユーザー名とパスワードを第三者に譲渡したり貸与したりすることはできません。当社は、ユーザー名とパスワードの組み合わせが登録情報と一致してログインされた場合には、そのユーザー名を登録しているユーザー自身による利用とみなします。ユーザー名が不正に利用されていることに気付いた場合には、すみやかに当社へ報告してください。`,
+      "management_terms_1": `ユーザーは、自己の責任で、本サービスのユーザー名とパスワードを管理してください。ユーザー名を保護するため、パスワードは他人に知らせないでください。`,
+      "management_terms_2": `また、ユーザーは、いかなる場合にも、ユーザー名とパスワードを第三者に譲渡したり貸与したりすることはできません。当社は、ユーザー名とパスワードの組み合わせが登録情報と一致してログインされた場合には、そのユーザー名を登録しているユーザー自身による利用とみなします。ユーザー名が不正に利用されていることに気付いた場合には、すみやかに当社へ報告してください。`,
       "use_service": `本サービスのご利用`,
       "use_service_1": `ユーザーは、本サービスのご利用にあたって、不正な行為をしないでください。たとえば、当社のサーバーやネットワークの機能を破壊したり妨害するような行為をしてはなりません。当社は、ユーザーの行為を不正行為と判断した場合には、事前の通知なく、ユーザーに対して本サービスの利用を制限したり、またはユーザー登録を抹消することがあります。当社は、この利用制限などによりユーザーに生じた一切の損害について責任を負いません。`,
       "charge_and_payment": `料金及び支払方法`,
@@ -342,23 +337,20 @@ const resources = {
       "discontinuation": `本サービスの提供の停止`,
       "discontinuation_1": `当社は、本サービスにかかるコンピュータシステムの保守点検または更新を行う場合など、本サービスの提供が困難と判断した場合には、ユーザーに事前に通知することなく本サービスの提供を停止または中断することがあります。当社は、本サービスの提供の停止または中断により、ユーザーまたは第三者が被ったいかなる不利益または損害についても、理由を問わず責任を負いません。`,
       "limitation_liability": `保証の否認と責任の制限`,
-      "limitation_liability_1": `当社は、合理的な注意を払ったうえで本サービスを提供していますが、本サービスに事実上または法律上の瑕疵（安全性、信頼性、正確性、完全性、有効性、特定の目的への適合性、セキュリティなどに関する欠陥、エラーやバグ、権利侵害などを含みます。）がないことを保証するものではありません。
-                                また、当社は、本サービスによってユーザーに生じたあらゆる損害について、当社に故意又は重過失がある場合を除き、一切の責任を負いません。当社が法律上責任を負う場合であっても、当社は、ユーザーに生じた損害のうち特別な事情から生じた損害について一切の責任を負いません。
-                                `,
+      "limitation_liability_1": `当社は、合理的な注意を払ったうえで本サービスを提供していますが、本サービスに事実上または法律上の瑕疵（安全性、信頼性、正確性、完全性、有効性、特定の目的への適合性、セキュリティなどに関する欠陥、エラーやバグ、権利侵害などを含みます。）がないことを保証するものではありません。`,
+      "limitation_liability_2": `また、当社は、本サービスによってユーザーに生じたあらゆる損害について、当社に故意又は重過失がある場合を除き、一切の責任を負いません。当社が法律上責任を負う場合であっても、当社は、ユーザーに生じた損害のうち特別な事情から生じた損害について一切の責任を負いません。`,
       "changes_in_details": `サービス内容や利用規約の変更`,
-      "changes_in_details_1": `当社は、常に本サービスの変更および改善を行っていますので、ユーザーに通知することなく、投稿データを削除したり、本サービスの内容や利用条件を変更したり、本サービスの提供を中止することがあります。当社は、これらによってユーザーに生じた損害について一切の責任を負いません。
-                              当社は以下の場合には、ユーザーの個別の同意を要せず、本規約を変更することができるものとします。
-                              (1)本規約の変更がユーザーの一般の利益に適合するとき。
-                              (2)本規約の変更が本サービス利用契約の目的に反せず、かつ、変更の必要性、変更後の内容の相当性その他の変更に係る事情に照らして合理的なものであるとき。
-                              当社はユーザーに対し、本規約の変更にあたり、事前に、本規約を変更する旨及び変更後の本規約の内容並びにその効力発生時期を通知します。
-                              `,
+      "changes_in_details_1": `当社は、常に本サービスの変更および改善を行っていますので、ユーザーに通知することなく、投稿データを削除したり、本サービスの内容や利用条件を変更したり、本サービスの提供を中止することがあります。当社は、これらによってユーザーに生じた損害について一切の責任を負いません。`,
+      "changes_in_details_2": `当社は以下の場合には、ユーザーの個別の同意を要せず、本規約を変更することができるものとします。`,
+      "changes_in_details_3": `(1)本規約の変更がユーザーの一般の利益に適合するとき。`,
+      "changes_in_details_4": `(2)本規約の変更が本サービス利用契約の目的に反せず、かつ、変更の必要性、変更後の内容の相当性その他の変更に係る事情に照らして合理的なものであるとき。`,
+      "changes_in_details_5": `当社はユーザーに対し、本規約の変更にあたり、事前に、本規約を変更する旨及び変更後の本規約の内容並びにその効力発生時期を通知します。`,
       "notice_or_contact": `通知または連絡`,
       "notice_or_contact_1": `ユーザーと当社との間の通知または連絡は、当社の定める方法によって行います。`,
       "governing_law": `準拠法と裁判管轄`,
-      "governing_law_1": `本規約の解釈にあたっては、日本法を準拠法とします。
-                          本サービスに関して紛争が生じた場合には、東京地方裁判所又は東京簡易裁判所を専属的合意管轄とします。
-                          2024年10月1日制定
-                          `,
+      "governing_law_1": `本規約の解釈にあたっては、日本法を準拠法とします。`,
+      "governing_law_2": `本サービスに関して紛争が生じた場合には、東京地方裁判所又は東京簡易裁判所を専属的合意管轄とします。`,
+      "governing_law_3": `2024年10月1日制定`,
     }
   }
 };
